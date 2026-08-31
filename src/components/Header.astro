@@ -10,7 +10,7 @@ import Logo from './Logo.astro';
       <span class="label-close">CLOSE</span>
     </button>
 
-    <a href="/" class="brand-logo" aria-label="Home">
+    <a href="/" class="brand-logo" aria-label="LINDQVIST & VALE Home">
       <Logo />
     </a>
 
@@ -19,6 +19,7 @@ import Logo from './Logo.astro';
     </a>
   </div>
 
+  <!-- Mobile/Tablet Navigation Drawer -->
   <nav class="mobile-overlay" id="mobile-nav" aria-hidden="true">
     <ul class="nav-list">
       {NAV_LINKS.map((link) => (
@@ -67,29 +68,36 @@ import Logo from './Logo.astro';
     left: 0;
     width: 100%;
     z-index: 1000;
-    mix-blend-mode: difference;
-    color: #FFFFFF;
+    /* Top scrim gradient guarantees text contrast over any image tone */
+    background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
+    transition: background 0.3s $ease-editorial;
 
     .header-inner {
       display: flex;
       justify-content: space-between;
       align-items: center;
-      padding: clamp(1rem, 2vw, 1.75rem) $space-fluid-page;
+      padding: clamp(1.25rem, 2.5vw, 2rem) $space-fluid-page;
       position: relative;
       z-index: 1001;
+      color: #FFFFFF;
     }
 
     .nav-trigger, .brand-logo, .contact-link {
-      color: inherit;
+      color: #FFFFFF;
       text-decoration: none;
       background: none;
       border: none;
       cursor: pointer;
       font-family: inherit;
       padding: 0;
+      display: inline-flex;
+      align-items: center;
+      /* Subtle drop shadow for extreme light-background image areas */
+      filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
+      transition: opacity 0.2s ease;
 
       &:hover {
-        opacity: 0.7;
+        opacity: 0.75;
       }
     }
 
@@ -111,7 +119,7 @@ import Logo from './Logo.astro';
       padding: clamp(6rem, 12vh, 8rem) $space-fluid-page $space-fluid-page;
       opacity: 0;
       pointer-events: none;
-      transition: opacity 0.4s;
+      transition: opacity 0.35s $ease-editorial;
       z-index: 1000;
 
       .nav-list {
@@ -121,9 +129,9 @@ import Logo from './Logo.astro';
         gap: clamp(1.5rem, 3vh, 2.5rem);
 
         .nav-link {
-          color: inherit;
+          color: $color-text;
           text-decoration: none;
-          transition: transform 0.3s;
+          transition: transform 0.3s $ease-editorial;
           display: inline-block;
 
           &:hover {
@@ -143,10 +151,15 @@ import Logo from './Logo.astro';
 
     /* OPEN STATE OVERRIDES */
     &.is-open {
-      mix-blend-mode: normal;
+      background: transparent;
 
       .header-inner {
         color: $color-text;
+      }
+
+      .nav-trigger, .brand-logo, .contact-link {
+        color: $color-text;
+        filter: none;
       }
 
       .nav-trigger {

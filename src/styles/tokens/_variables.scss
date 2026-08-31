@@ -6,6 +6,9 @@ $color-muted: #707070;
 // FONTS
 $font-lora: "Lora", Georgia, serif;
 
+// TRANSITIONS & EASING
+$ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
 // FLUID TYPOGRAPHY TOKENS (Mobile 320px -> Desktop 1440px+)
 // Heading XL: 36px (2.25rem) mobile -> 64px (4rem) desktop
 $font-heading-xl: clamp(2.25rem, 2.5vw + 1.5rem, 4rem);
