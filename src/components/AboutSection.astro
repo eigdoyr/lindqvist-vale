@@ -1,0 +1,182 @@
+---
+import SectionHeader from './SectionHeader.astro';
+import { ABOUT_DATA } from '../data/about';
+import { PROJECTS } from '../data/projects';
+---
+
+<section class="about-section" id="about">
+  <div class="about-header-wrapper">
+    <SectionHeader 
+      tag={ABOUT_DATA.tag} 
+      linkText={ABOUT_DATA.linkText} 
+      linkHref={ABOUT_DATA.linkHref} 
+    />
+  </div>
+
+  <div class="about-content reveal">
+    <h2 class="type-heading-xl about-statement">
+      {ABOUT_DATA.statementPrefix}{' '}
+      <em>{ABOUT_DATA.locations[0]}</em>,{' '}
+      <em>{ABOUT_DATA.locations[1]}</em>, and{' '}
+      <em>{ABOUT_DATA.locations[2]}</em>.{' '}
+      {ABOUT_DATA.statementSuffix}
+    </h2>
+  </div>
+
+  <!-- FULL-BLEED SLIDESHOW -->
+  <div class="about-media-wrapper reveal" id="about-slideshow">
+    <div class="slides-container">
+      {PROJECTS.map((project, index) => (
+        <div class={`slide ${index === 0 ? 'is-active' : ''}`} data-slide={index}>
+          <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
+        </div>
+      ))}
+      <div class="slide-overlay"></div>
+    </div>
+
+    <!-- MINIMALIST LINE TICKS -->
+    <div class="indicator-lines">
+      {PROJECTS.map((_, index) => (
+        <span class={`line-tick ${index === 0 ? 'is-active' : ''}`} data-tick={index}></span>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  const slideshow = document.getElementById('about-slideshow');
+  if (slideshow) {
+    const slides = slideshow.querySelectorAll('.slide');
+    const ticks = slideshow.querySelectorAll('.line-tick');
+    let current = 0;
+    const total = slides.length;
+
+    if (total > 1) {
+      setInterval(() => {
+        slides[current].classList.remove('is-active');
+        if (ticks[current]) ticks[current].classList.remove('is-active');
+
+        current = (current + 1) % total;
+
+        slides[current].classList.add('is-active');
+        if (ticks[current]) ticks[current].classList.add('is-active');
+      }, 4500);
+    }
+  }
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .about-section {
+    padding-top: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+    overflow-x: hidden;
+
+    .about-header-wrapper,
+    .about-content {
+      padding-inline: $space-fluid-page;
+    }
+
+    .about-content {
+      max-width: 1200px;
+      margin-bottom: clamp(3rem, 6vw, 6rem);
+
+      .about-statement {
+        color: $color-text;
+        line-height: 1.15;
+        font-weight: 400;
+
+        em {
+          font-style: italic;
+          font-family: $font-lora;
+        }
+      }
+    }
+
+    /* FULL-BLEED EDGE-TO-EDGE MEDIA */
+    .about-media-wrapper {
+      position: relative;
+      width: 100vw;
+      margin-left: 50%;
+      transform: translateX(-50%);
+      aspect-ratio: 21 / 9;
+      overflow: hidden;
+      background-color: $color-text;
+
+      .slides-container {
+        position: relative;
+        width: 100%;
+        height: 100%;
+
+        .slide {
+          position: absolute;
+          inset: 0;
+          opacity: 0;
+          transform: scale(1.04);
+          transition: opacity 1.2s $ease-editorial, transform 1.2s $ease-editorial;
+          pointer-events: none;
+
+          &.is-active {
+            opacity: 1;
+            transform: scale(1);
+            pointer-events: auto;
+          }
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .slide-overlay {
+          position: absolute;
+          inset: 0;
+          background: linear-gradient(180deg, rgba(0, 0, 0, 0) 60%, rgba(0, 0, 0, 0.35) 100%);
+          pointer-events: none;
+        }
+      }
+
+     /* LINE TICKS */
+      .indicator-lines {
+        position: absolute;
+        bottom: $space-fluid-page;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+
+        .line-tick {
+          display: block;
+          height: 2px;
+          width: 24px;
+          background-color: rgba(255, 255, 255, 0.3);
+          transition: background-color 0.4s ease, width 0.4s $ease-editorial;
+
+          &.is-active {
+            background-color: #FFFFFF;
+            width: 36px;
+          }
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .about-section {
+      .about-media-wrapper {
+        aspect-ratio: 16 / 10;
+
+        .indicator-lines .line-tick {
+          width: 16px;
+          &.is-active {
+            width: 24px;
+          }
+        }
+      }
+    }
+  }
+</style>
