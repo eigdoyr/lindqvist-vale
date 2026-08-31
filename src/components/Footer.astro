@@ -1,0 +1,235 @@
+---
+import { FOOTER_DATA } from '../data/footer';
+import Logo from './Logo.astro';
+---
+
+<footer class="site-footer" id="contact">
+  <!-- OVERSIZED BRAND LOGO -->
+  <div class="footer-brand">
+    <a href="/" class="brand-logo" aria-label="LINDQVIST & VALE Home">
+      <Logo />
+    </a>
+  </div>
+
+  <div class="footer-top">
+    <!-- LEFT: DIALOGUE INVITATION -->
+    <div class="dialogue-col">
+      <h2 class="type-heading-l dialogue-title">{FOOTER_DATA.heading}</h2>
+      <p class="type-body-regular dialogue-subtext">{FOOTER_DATA.subtext}</p>
+      <a href={`mailto:${FOOTER_DATA.email}`} class="contact-email type-heading-l">
+        {FOOTER_DATA.email}
+      </a>
+    </div>
+
+    <!-- RIGHT: 4-COLUMN LINK GRID -->
+    <div class="footer-grid">
+      <!-- OFFICES -->
+      <div class="grid-col">
+        <span class="col-label type-caption">OFFICES</span>
+        <ul class="col-list type-body-small">
+          {FOOTER_DATA.offices.map((office) => (
+            <li>
+              <strong>{office.city}</strong>
+              <span class="address-text">{office.address}</span>
+            </li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- CONTACT -->
+      <div class="grid-col">
+        <span class="col-label type-caption">DIRECT</span>
+        <ul class="col-list type-body-small">
+          <li>
+            <span>Email</span>
+            <a href={`mailto:${FOOTER_DATA.email}`}>{FOOTER_DATA.email}</a>
+          </li>
+          <li>
+            <span>Phone</span>
+            <a href={`tel:${FOOTER_DATA.phone}`}>{FOOTER_DATA.phone}</a>
+          </li>
+        </ul>
+      </div>
+
+      <!-- SITEMAP -->
+      <div class="grid-col">
+        <span class="col-label type-caption">SITEMAP</span>
+        <ul class="col-list type-body-small">
+          {FOOTER_DATA.sitemap.map((item) => (
+            <li><a href={item.href}>{item.label}</a></li>
+          ))}
+        </ul>
+      </div>
+
+      <!-- SOCIAL -->
+      <div class="grid-col">
+        <span class="col-label type-caption">SOCIAL</span>
+        <ul class="col-list type-body-small">
+          {FOOTER_DATA.socials.map((social) => (
+            <li><a href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a></li>
+          ))}
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- BOTTOM BAR -->
+  <div class="footer-bottom type-caption">
+    <span>© 2026 LINDQVIST & VALE ARCHITECTS</span>
+    <span>ALL RIGHTS RESERVED</span>
+  </div>
+</footer>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .site-footer {
+    padding-top: clamp(5rem, 10vw, 9rem);
+    padding-bottom: clamp(2.5rem, 5vw, 4rem);
+    padding-inline: $space-fluid-page;
+    background-color: $color-bg;
+
+    /* BRAND LOGO: FULL WIDTH & OVERSIZED */
+    .footer-brand {
+      width: 100%;
+      margin-bottom: clamp(4rem, 8vw, 7rem);
+      padding-bottom: clamp(2.5rem, 5vw, 4rem);
+      border-bottom: 1px solid rgba($color-text, 0.12);
+
+      .brand-logo {
+        display: block;
+        width: 100%;
+        color: $color-text;
+        text-decoration: none;
+
+        /* Force SVG to scale large across full container width */
+        :global(svg) {
+          width: 100%;
+          height: auto;
+          max-height: 160px;
+          display: block;
+          fill: currentColor;
+          color: $color-text;
+        }
+
+        /* Fallback if Logo renders as raw text */
+        font-size: clamp(3rem, 10vw, 8.5rem);
+        line-height: 1;
+        font-weight: 400;
+        letter-spacing: -0.02em;
+      }
+    }
+
+    .footer-top {
+      display: grid;
+      grid-template-columns: 1fr 1.4fr;
+      gap: clamp(3.5rem, 7vw, 8rem);
+      margin-bottom: clamp(5rem, 10vw, 10rem);
+
+      .dialogue-col {
+        display: flex;
+        flex-direction: column;
+
+        .dialogue-title {
+          font-weight: 400;
+          margin-bottom: 1.25rem;
+          color: $color-text;
+        }
+
+        .dialogue-subtext {
+          color: $color-muted;
+          max-width: 440px;
+          margin-bottom: 2.5rem;
+          line-height: 1.6;
+        }
+
+        .contact-email {
+          text-decoration: none;
+          color: $color-text;
+          font-weight: 400;
+          transition: opacity 0.2s ease;
+
+          &:hover {
+            opacity: 0.6;
+          }
+        }
+      }
+
+      .footer-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: clamp(1.5rem, 3vw, 2.75rem);
+
+        .grid-col {
+          .col-label {
+            display: block;
+            color: $color-muted;
+            margin-bottom: 1.75rem;
+            letter-spacing: 0.08em;
+          }
+
+          .col-list {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+
+            li {
+              display: flex;
+              flex-direction: column;
+              gap: 0.25rem;
+
+              .address-text {
+                color: $color-muted;
+                line-height: 1.4;
+              }
+
+              a {
+                color: $color-text;
+                text-decoration: none;
+                transition: opacity 0.2s ease;
+
+                &:hover {
+                  opacity: 0.6;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+
+    .footer-bottom {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-top: 1px solid rgba($color-text, 0.12);
+      padding-top: 2rem;
+      color: $color-muted;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .site-footer .footer-top {
+      grid-template-columns: 1fr;
+
+      .footer-grid {
+        grid-template-columns: repeat(2, 1fr);
+        row-gap: 3.5rem;
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .site-footer .footer-top .footer-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .site-footer .footer-bottom {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.75rem;
+    }
+  }
+</style>
