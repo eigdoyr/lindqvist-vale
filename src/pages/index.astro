@@ -12,7 +12,8 @@ import { PROJECTS } from '../data/projects';
   <main>
     <Hero />
 
-    <section class="works-section">
+    <!-- SELECTED WORKS SECTION -->
+    <section class="works-section site-section">
       <!-- EDITORIAL MANIFESTO STATEMENT -->
       <div class="statement-wrapper reveal">
         <h2 class="type-heading-xl statement-text">
@@ -41,8 +42,10 @@ import { PROJECTS } from '../data/projects';
       </div>
     </section>
 
+    <!-- ABOUT SECTION -->
     <AboutSection />
   </main>
+
   <Footer />
 </BaseLayout>
 
@@ -50,8 +53,9 @@ import { PROJECTS } from '../data/projects';
   @use '../styles/tokens/variables' as *;
 
   .works-section {
-    padding-top: clamp(4rem, 8vw, 8rem);
-    padding-bottom: clamp(4rem, 8vw, 8rem);
+    padding-block: $space-section-y;
+    padding-inline: 0; /* Full bleed wrapper for edge-to-edge horizontal scroll */
+    background-color: $color-bg;
 
     .statement-wrapper,
     .section-header-wrapper {
@@ -61,12 +65,16 @@ import { PROJECTS } from '../data/projects';
     .statement-wrapper {
       max-width: 1100px;
       margin-left: auto;
-      margin-bottom: clamp(4rem, 8vw, 7rem);
+      margin-bottom: $space-section-y-sm;
 
       .statement-text {
         color: $color-text;
         line-height: 1.15;
       }
+    }
+
+    .section-header-wrapper {
+      margin-bottom: $space-element-gap;
     }
 
     /* HORIZONTAL SCROLL CONTAINER */
@@ -94,7 +102,7 @@ import { PROJECTS } from '../data/projects';
         padding-inline: $space-fluid-page;
 
         .card-slide {
-          /* Exactly 785px width at 1400px screen size (785/1400 = ~56.07vw) */
+          /* Exactly 785px width at 1400px screen size */
           flex: 0 0 clamp(290px, 56.07vw, 785px);
           scroll-snap-align: start;
         }

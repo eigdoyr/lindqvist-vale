@@ -1,0 +1,36 @@
+@use "./tokens/variables" as *;
+
+/* REUSABLE SECTION LAYOUT SYSTEM */
+.site-section {
+  padding-inline: $space-fluid-page;
+  padding-block: $space-section-y;
+  background-color: $color-bg;
+  width: 100%;
+
+  &--compact {
+    padding-block: $space-section-y-sm;
+  }
+
+  &--no-top {
+    padding-top: 0;
+  }
+
+  &--no-bottom {
+    padding-bottom: 0;
+  }
+}
+
+/* GLOBAL MEDIA FRAME WITH STROKE */
+.media-frame {
+  border: 1px solid $color-text;
+  background-color: rgba($color-muted, 0.08);
+  overflow: hidden;
+
+  img,
+  video {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+}

@@ -23,6 +23,20 @@ $font-body-regular: clamp(0.9375rem, 0.2vw + 0.88rem, 1rem);
 $font-body-small: 0.75rem; // 12px
 $font-caption: 0.75rem; // 12px
 
-// GUTTERS & SPACING
-$space-fluid-page: clamp(1.25rem, 4vw, 3.5rem);
-$space-section-gap: clamp(4rem, 8vw, 10rem);
+/* FLUID PAGE & SECTION SPACING TOKENS */
+$space-fluid-page: clamp(1.5rem, 4vw, 4rem); /* Horizontal page margins */
+$space-section-y: clamp(
+  6rem,
+  11vw,
+  11rem
+); /* Standard major section vertical spacing */
+$space-section-y-sm: clamp(
+  3.5rem,
+  7vw,
+  6.5rem
+); /* Compact section vertical spacing */
+$space-element-gap: clamp(
+  1.5rem,
+  3.5vw,
+  3rem
+); /* Space between section header & content */
