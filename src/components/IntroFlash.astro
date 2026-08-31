@@ -1,0 +1,87 @@
+---
+import Logo from './Logo.astro';
+---
+
+<div class="intro-curtain" id="intro-flash" aria-hidden="true">
+  <div class="logo-wrapper">
+    <Logo />
+  </div>
+</div>
+
+<script>
+  document.body.style.overflow = 'hidden';
+
+  window.addEventListener('DOMContentLoaded', () => {
+    const curtain = document.getElementById('intro-flash');
+    if (curtain) {
+      setTimeout(() => {
+        curtain.classList.add('is-dismissed');
+        document.body.style.overflow = '';
+      }, 900);
+
+      curtain.addEventListener('transitionend', (e) => {
+        if (e.propertyName === 'transform') {
+          curtain.style.display = 'none';
+        }
+      });
+    }
+  });
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .intro-curtain {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    height: 100dvh;
+    z-index: 9999;
+    background-color: #000000;
+    transition: transform 1s cubic-bezier(0.76, 0, 0.24, 1);
+    will-change: transform;
+
+    .logo-wrapper {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: min(40vw, 320px);
+      color: #ffffff;
+      opacity: 0;
+      animation: logoReveal 1.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+      transition: opacity 1.3s ease, transform 1.3s ease;
+
+      :global(svg) {
+        width: 100%;
+        height: auto;
+        display: block;
+        fill: currentColor;
+        color: #ffffff;
+        margin: 0 auto;
+      }
+    }
+
+  &.is-dismissed {
+      transform: translateY(-100%);
+
+      .logo-wrapper {
+        opacity: 0 !important;
+        transform: translate(-50%, calc(-10% - 10px));
+      }
+    }
+  }
+
+  @keyframes logoReveal {
+    0% {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% + 6px)) scale(2.95);
+    }
+    100% {
+      opacity: 1;
+      transform: translate(-50%, -50%) scale(1);
+    }
+  }
+</style>
