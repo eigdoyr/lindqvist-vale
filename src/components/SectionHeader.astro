@@ -1,0 +1,41 @@
+---
+interface Props {
+  tag: string;
+  linkText?: string;
+  linkHref?: string;
+}
+
+const { tag, linkText, linkHref = "#" } = Astro.props;
+---
+
+<div class="section-header">
+  <span class="section-tag type-caption">{tag}</span>
+  {linkText && <a href={linkHref} class="section-link type-body-small">{linkText}</a>}
+</div>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .section-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid rgba($color-text, 0.15);
+    padding-bottom: 0.75rem;
+    margin-bottom: clamp(2rem, 4vw, 4rem);
+
+    .section-tag {
+      color: $color-muted;
+    }
+
+    .section-link {
+      text-decoration: none;
+      color: $color-text;
+      transition: opacity 0.2s ease;
+
+      &:hover {
+        opacity: 0.6;
+      }
+    }
+  }
+</style>

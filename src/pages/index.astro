@@ -1,10 +1,112 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import { PROJECTS } from '../data/projects';
 ---
 
 <BaseLayout>
   <main>
     <Hero />
+
+    <section class="works-section">
+      <!-- EDITORIAL MANIFESTO STATEMENT -->
+      <div class="statement-wrapper reveal">
+        <h2 class="type-heading-xl statement-text">
+          We design spaces that elevate the human experience through intentional geometry, raw materiality, and uncompromising restraint.
+        </h2>
+      </div>
+
+      <!-- SECTION HEADER -->
+      <div class="section-header-wrapper">
+        <SectionHeader 
+          tag="01 / SELECTED WORKS" 
+          linkText="View All Works →" 
+          linkHref="#works" 
+        />
+      </div>
+
+      <!-- HORIZONTAL SCROLL CONTAINER -->
+      <div class="works-scroll-container">
+        <div class="works-track">
+          {PROJECTS.map((project) => (
+            <div class="card-slide">
+              <ProjectCard project={project} />
+            </div>
+          ))}
+        </div>
+      </div>
+    </section>
   </main>
 </BaseLayout>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .works-section {
+    padding-top: clamp(4rem, 8vw, 8rem);
+    padding-bottom: clamp(4rem, 8vw, 8rem);
+
+    .statement-wrapper,
+    .section-header-wrapper {
+      padding-inline: $space-fluid-page;
+    }
+
+    .statement-wrapper {
+      max-width: 1100px;
+      margin-left: auto;
+      margin-bottom: clamp(4rem, 8vw, 7rem);
+
+      .statement-text {
+        color: $color-text;
+        line-height: 1.15;
+      }
+    }
+
+    /* HORIZONTAL SCROLL CONTAINER */
+    .works-scroll-container {
+      width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      scroll-snap-type: x mandatory;
+      scroll-padding-left: $space-fluid-page;
+      scroll-padding-right: $space-fluid-page;
+      scroll-behavior: smooth;
+      -webkit-overflow-scrolling: touch;
+      
+      /* Hide scrollbar */
+      scrollbar-width: none;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+
+      .works-track {
+        display: flex;
+        gap: clamp(1.5rem, 3.5vw, 3.5rem);
+        width: max-content;
+        /* Matches exact page margin on start and end of scroll */
+        padding-inline: $space-fluid-page;
+
+        .card-slide {
+          /* Exactly 785px width at 1400px screen size (785/1400 = ~56.07vw) */
+          flex: 0 0 clamp(290px, 56.07vw, 785px);
+          scroll-snap-align: start;
+        }
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    .works-section {
+      .statement-wrapper {
+        margin-left: 0;
+      }
+
+      .works-scroll-container .works-track .card-slide {
+        /* Mobile: 85vw width with 15% peek of next card */
+        flex: 0 0 calc(85vw - #{$space-fluid-page});
+      }
+    }
+  }
+</style>
