@@ -1,0 +1,26 @@
+---
+import logoRaw from '../assets/logo.svg?raw';
+---
+
+<div class="site-logo" aria-label="LINDQVIST & VALE">
+  <Fragment set:html={logoRaw} />
+</div>
+
+<style lang="scss">
+  .site-logo {
+    display: inline-flex;
+    align-items: center;
+
+    :global(svg) {
+      height: clamp(12px, 1vw, 14px);
+      width: auto;
+      display: block;
+    }
+
+
+    :global(svg *) {
+      fill: currentColor !important;
+      stroke: none;
+    }
+  }
+</style>
