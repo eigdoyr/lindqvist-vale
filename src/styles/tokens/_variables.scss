@@ -1,42 +1,28 @@
-// COLORS
+/* COLORS */
 $color-bg: #fcfcf8;
 $color-text: #252525;
 $color-muted: #707070;
 
-// FONTS
+/* FONTS */
 $font-lora: "Lora", Georgia, serif;
 
-// TRANSITIONS & EASING
-$ease-editorial: cubic-bezier(0.16, 1, 0.3, 1);
-
-// FLUID TYPOGRAPHY TOKENS (Mobile 320px -> Desktop 1440px+)
-// Heading XL: 36px (2.25rem) mobile -> 64px (4rem) desktop
+/* FLUID TYPOGRAPHY TOKENS */
 $font-heading-xl: clamp(2.25rem, 2.5vw + 1.5rem, 4rem);
-
-// Heading L: 26px (1.625rem) mobile -> 40px (2.5rem) desktop
 $font-heading-l: clamp(1.625rem, 1.8vw + 1.1rem, 2.5rem);
+$font-body-regular: clamp(0.84375rem, 0.2vw + 0.795rem, 0.90625rem);
+$font-body-small: 0.75rem;
+$font-caption: 0.75rem;
 
-// Body Regular: 15px (0.9375rem) -> 16px (1rem)
-$font-body-regular: clamp(0.9375rem, 0.2vw + 0.88rem, 1rem);
+/* BORDERS & KEYLINES */
+$border-keyline: 1px solid rgba(17, 17, 17, 0.12);
+$border-keyline-dark: 1px solid rgba(255, 255, 255, 0.15);
 
-// Body Small & Caption
-$font-body-small: 0.75rem; // 12px
-$font-caption: 0.75rem; // 12px
+/* GUTTERS & SPACING */
+$space-fluid-page: clamp(1.5rem, 4vw, 4rem);
+$space-section-y: clamp(6rem, 11vw, 11rem);
+$space-section-y-sm: clamp(3.5rem, 7vw, 6.5rem);
+$space-element-gap: clamp(1.5rem, 3.5vw, 3rem);
 
-/* FLUID PAGE & SECTION SPACING TOKENS */
-$space-fluid-page: clamp(1.5rem, 4vw, 4rem); /* Horizontal page margins */
-$space-section-y: clamp(
-  6rem,
-  11vw,
-  11rem
-); /* Standard major section vertical spacing */
-$space-section-y-sm: clamp(
-  3.5rem,
-  7vw,
-  6.5rem
-); /* Compact section vertical spacing */
-$space-element-gap: clamp(
-  1.5rem,
-  3.5vw,
-  3rem
-); /* Space between section header & content */
+/* EASING CURVES */
+$ease-editorial: cubic-bezier(0.76, 0, 0.24, 1);
+$ease-out-editorial: cubic-bezier(0.16, 1, 0.3, 1);

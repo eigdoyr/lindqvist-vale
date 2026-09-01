@@ -14,7 +14,7 @@ import Logo from './Logo.astro';
   <div class="footer-top">
     <!-- LEFT: DIALOGUE INVITATION -->
     <div class="dialogue-col">
-      <h2 class="type-heading-l dialogue-title">{FOOTER_DATA.heading}</h2>
+      <h2 class="type-caption dialogue-title">{FOOTER_DATA.heading}</h2>
       <p class="type-body-regular dialogue-subtext">{FOOTER_DATA.subtext}</p>
       <a href={`mailto:${FOOTER_DATA.email}`} class="contact-email type-heading-l">
         {FOOTER_DATA.email}
@@ -26,7 +26,7 @@ import Logo from './Logo.astro';
       <!-- OFFICES -->
       <div class="grid-col">
         <span class="col-label type-caption">OFFICES</span>
-        <ul class="col-list type-body-small">
+        <ul class="col-list type-body-regular">
           {FOOTER_DATA.offices.map((office) => (
             <li>
               <strong>{office.city}</strong>
@@ -36,10 +36,10 @@ import Logo from './Logo.astro';
         </ul>
       </div>
 
-      <!-- CONTACT -->
+      <!-- DIRECT -->
       <div class="grid-col">
         <span class="col-label type-caption">DIRECT</span>
-        <ul class="col-list type-body-small">
+        <ul class="col-list type-body-regular">
           <li>
             <span>Email</span>
             <a href={`mailto:${FOOTER_DATA.email}`}>{FOOTER_DATA.email}</a>
@@ -54,7 +54,7 @@ import Logo from './Logo.astro';
       <!-- SITEMAP -->
       <div class="grid-col">
         <span class="col-label type-caption">SITEMAP</span>
-        <ul class="col-list type-body-small">
+        <ul class="col-list type-body-regular">
           {FOOTER_DATA.sitemap.map((item) => (
             <li><a href={item.href}>{item.label}</a></li>
           ))}
@@ -64,7 +64,7 @@ import Logo from './Logo.astro';
       <!-- SOCIAL -->
       <div class="grid-col">
         <span class="col-label type-caption">SOCIAL</span>
-        <ul class="col-list type-body-small">
+        <ul class="col-list type-body-regular">
           {FOOTER_DATA.socials.map((social) => (
             <li><a href={social.href} target="_blank" rel="noopener noreferrer">{social.label}</a></li>
           ))}
@@ -102,9 +102,8 @@ import Logo from './Logo.astro';
         color: $color-text;
         text-decoration: none;
 
-        /* Force SVG to scale large across full container width */
         :global(svg) {
-          width: 100%;
+          width:40%;
           height: auto;
           max-height: 160px;
           display: block;
@@ -112,7 +111,6 @@ import Logo from './Logo.astro';
           color: $color-text;
         }
 
-        /* Fallback if Logo renders as raw text */
         font-size: clamp(3rem, 10vw, 8.5rem);
         line-height: 1;
         font-weight: 400;

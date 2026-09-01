@@ -14,12 +14,9 @@ import Logo from './Logo.astro';
       <Logo />
     </a>
 
-    <a href="#contact" class="contact-link type-caption">
-      CONTACT
-    </a>
+    <a href="#contact" class="contact-link type-caption">CONTACT</a>
   </div>
 
-  <!-- Mobile/Tablet Navigation Drawer -->
   <nav class="mobile-overlay" id="mobile-nav" aria-hidden="true">
     <ul class="nav-list">
       {NAV_LINKS.map((link) => (
@@ -36,42 +33,59 @@ import Logo from './Logo.astro';
 </header>
 
 <script>
-  const toggleBtn = document.getElementById('menu-toggle');
-  const header = document.getElementById('site-header');
-  const mobileNav = document.getElementById('mobile-nav');
+  const setupHeader = () => {
+    const toggleBtn = document.getElementById('menu-toggle');
+    const header = document.getElementById('site-header');
+    const mobileNav = document.getElementById('mobile-nav');
 
-  // Menu Drawer Toggle Logic
-  if (toggleBtn && header && mobileNav) {
-    toggleBtn.addEventListener('click', () => {
-      const isOpen = header.classList.toggle('is-open');
+    if (!header || !toggleBtn || !mobileNav) return;
+
+    // Menu Drawer Toggle
+    const toggleMenu = (open?: boolean) => {
+      const isOpen = open !== undefined ? open : header.classList.toggle('is-open');
+      if (open === false) header.classList.remove('is-open');
+
       toggleBtn.setAttribute('aria-expanded', String(isOpen));
       mobileNav.setAttribute('aria-hidden', String(!isOpen));
       document.body.style.overflow = isOpen ? 'hidden' : '';
-    });
+    };
+
+    toggleBtn.addEventListener('click', () => toggleMenu());
 
     mobileNav.querySelectorAll('a').forEach((link) => {
-      link.addEventListener('click', () => {
-        header.classList.remove('is-open');
-        toggleBtn.setAttribute('aria-expanded', 'false');
-        mobileNav.setAttribute('aria-hidden', 'true');
-        document.body.style.overflow = '';
-      });
+      link.addEventListener('click', () => toggleMenu(false));
     });
-  }
 
-  // 100vh Hero Scroll Detection
-  const handleScroll = () => {
-    if (!header) return;
-    const threshold = window.innerHeight - 80;
-    if (window.scrollY >= threshold) {
-      header.classList.add('is-scrolled');
-    } else {
-      header.classList.remove('is-scrolled');
-    }
+    // Close on Escape Key
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && header.classList.contains('is-open')) {
+        toggleMenu(false);
+      }
+    });
+
+    // Throttled Scroll Listener (100vh Theme Shift)
+    let ticking = false;
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const threshold = window.innerHeight - 80;
+          if (window.scrollY >= threshold) {
+            header.classList.add('is-scrolled');
+          } else {
+            header.classList.remove('is-scrolled');
+          }
+          ticking = false;
+        });
+        ticking = true;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
   };
 
-  window.addEventListener('scroll', handleScroll, { passive: true });
-  handleScroll();
+  document.addEventListener('astro:page-load', setupHeader);
+  if (document.readyState !== 'loading') setupHeader();
 </script>
 
 <style lang="scss">
@@ -83,7 +97,6 @@ import Logo from './Logo.astro';
     left: 0;
     width: 100%;
     z-index: 1000;
-    /* Initial scrim gradient over dark hero */
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
     transition: background 0.4s $ease-editorial, 
                 border-color 0.4s $ease-editorial,
@@ -96,7 +109,7 @@ import Logo from './Logo.astro';
       padding: clamp(1.25rem, 2.5vw, 2rem) $space-fluid-page;
       position: relative;
       z-index: 1001;
-      color: #FFFFFF;
+      color: #ffffff;
       transition: color 0.4s $ease-editorial;
     }
 
@@ -108,12 +121,11 @@ import Logo from './Logo.astro';
         height: auto;
         display: block;
         fill: currentColor;
-        color: inherit;
       }
     }
 
     .nav-trigger, .brand-logo, .contact-link {
-      color: #FFFFFF;
+      color: #ffffff;
       text-decoration: none;
       background: none;
       border: none;
@@ -130,28 +142,21 @@ import Logo from './Logo.astro';
       }
     }
 
-    .nav-trigger {
-      .label-close {
-        display: none;
-      }
-    }
+    .nav-trigger .label-close { display: none; }
 
-    /* SCROLLED STATE (PAST 100VH HERO) */
+    /* SCROLLED STATE PAST HERO */
     &.is-scrolled:not(.is-open) {
       background: $color-bg;
-      border-bottom: 1px solid rgba($color-text, 0.1);
+      
 
-      .header-inner {
-        color: $color-text;
-      }
-
+      .header-inner { color: $color-text; }
       .nav-trigger, .brand-logo, .contact-link {
         color: $color-text;
         filter: none;
       }
     }
 
-    /* MOBILE DRAWER OVERLAY */
+    /* MOBILE OVERLAY */
     .mobile-overlay {
       position: fixed;
       inset: 0;
@@ -176,31 +181,23 @@ import Logo from './Logo.astro';
           color: $color-text;
           text-decoration: none;
           transition: transform 0.3s $ease-editorial;
-          display: inline-block;
 
-          &:hover {
-            transform: translateX(10px);
-          }
+          &:hover { transform: translateX(10px); }
         }
       }
 
       .drawer-footer {
         display: flex;
         justify-content: space-between;
-        border-top: 1px solid rgba($color-text, 0.15);
         padding-top: 1.5rem;
         color: $color-muted;
       }
     }
 
-    /* OPEN STATE OVERRIDES */
     &.is-open {
       background: transparent;
 
-      .header-inner {
-        color: $color-text;
-      }
-
+      .header-inner { color: $color-text; }
       .nav-trigger, .brand-logo, .contact-link {
         color: $color-text;
         filter: none;
@@ -215,13 +212,6 @@ import Logo from './Logo.astro';
         opacity: 1;
         pointer-events: auto;
       }
-    }
-  }
-
-  @media (max-width: 600px) {
-    .site-header .mobile-overlay .drawer-footer {
-      flex-direction: column;
-      gap: 0.5rem;
     }
   }
 </style>

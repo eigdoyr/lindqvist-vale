@@ -10,7 +10,7 @@ const { tag, linkText, linkHref = "#" } = Astro.props;
 
 <div class="section-header">
   <span class="section-tag type-caption">{tag}</span>
-  {linkText && <a href={linkHref} class="section-link type-body-small">{linkText}</a>}
+  {linkText && <a href={linkHref} class="section-link">{linkText}</a>}
 </div>
 
 <style lang="scss">
@@ -29,6 +29,8 @@ const { tag, linkText, linkHref = "#" } = Astro.props;
     }
 
     .section-link {
+      font-style: italic;
+      font-size: clamp(1.125rem, 1.5vw, 1.25rem);
       text-decoration: none;
       color: $color-text;
       transition: opacity 0.2s ease;
