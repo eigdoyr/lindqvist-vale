@@ -1,0 +1,452 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import { PROJECTS, type Project } from '../../data/projects';
+
+export async function getStaticPaths() {
+  return PROJECTS.map((project, index) => {
+    const nextProject = PROJECTS[(index + 1) % PROJECTS.length];
+    const prevProject = PROJECTS[(index - 1 + PROJECTS.length) % PROJECTS.length];
+
+    return {
+      params: { id: project.id },
+      props: { project, nextProject, prevProject },
+    };
+  });
+}
+
+interface Props {
+  project: Project;
+  nextProject: Project;
+  prevProject: Project;
+}
+
+const { project, nextProject, prevProject } = Astro.props;
+---
+
+<BaseLayout 
+  title={`${project.title} — Portfolio`} 
+  headerTheme="light" 
+  isInnerPage={true}
+>
+  <main class="project-detail">
+    <!-- PROJECT HERO / HEADER -->
+    <header class="project-hero">
+      <div class="hero-top">
+        <a href="/#works" class="back-link">← Back to Works</a>
+        <span class="project-ref">{project.ref}</span>
+      </div>
+
+      <div class="title-block">
+        <h1 class="project-title">{project.title}</h1>
+        {project.subtitle && <p class="project-subtitle">{project.subtitle}</p>}
+      </div>
+
+      <!-- KEY METADATA BAR -->
+      <dl class="meta-grid">
+        <div class="meta-item">
+          <dt>Typology</dt>
+          <dd>{project.typology}</dd>
+        </div>
+        <div class="meta-item">
+          <dt>Location</dt>
+          <dd>{project.location}</dd>
+        </div>
+        <div class="meta-item">
+          <dt>Scale</dt>
+          <dd>{project.scale}</dd>
+        </div>
+        <div class="meta-item">
+          <dt>Year</dt>
+          <dd>{project.year}</dd>
+        </div>
+      </dl>
+    </header>
+
+    <!-- FEATURED HERO COVER -->
+    <section class="cover-section">
+      <div class="cover-image-container">
+        <img src={project.image} alt={project.alt} class="cover-image" />
+      </div>
+    </section>
+
+    <!-- CONTENT & SPECS SECTION -->
+    <section class="content-section">
+      <div class="content-grid">
+        <!-- LEFT COLUMN: SPECS -->
+        <aside class="specs-col">
+          <h2 class="specs-heading">Project Credits & Details</h2>
+          <dl class="specs-list">
+            <div class="spec-row">
+              <dt>Typology</dt>
+              <dd>{project.typology}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Location</dt>
+              <dd>{project.location}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Area</dt>
+              <dd>{project.scale}</dd>
+            </div>
+            <div class="spec-row">
+              <dt>Year</dt>
+              <dd>{project.year}</dd>
+            </div>
+            {project.specs?.map((spec) => (
+              <div class="spec-row">
+                <dt>{spec.label}</dt>
+                <dd>{spec.value}</dd>
+              </div>
+            ))}
+          </dl>
+        </aside>
+
+        <!-- RIGHT COLUMN: NARRATIVE -->
+        <article class="narrative-col">
+          {project.summary && <p class="lead-summary">{project.summary}</p>}
+          
+          <div class="paragraphs">
+            {project.paragraphs?.map((paragraph) => (
+              <p>{paragraph}</p>
+            ))}
+          </div>
+        </article>
+      </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    {project.gallery && project.gallery.length > 0 && (
+      <section class="gallery-section">
+        <div class="gallery-grid">
+          {project.gallery.map((item) => (
+            <figure class={`gallery-item ${item.layout || 'full'}`}>
+              <div class="img-wrapper">
+                <img src={item.url} alt={item.alt} loading="lazy" />
+              </div>
+              {item.caption && <figcaption>{item.caption}</figcaption>}
+            </figure>
+          ))}
+        </div>
+      </section>
+    )}
+
+    <!-- NEXT / PREVIOUS PROJECT NAVIGATION -->
+    <nav class="project-pagination">
+      <a href={`/works/${prevProject.id}`} class="nav-card prev">
+        <span class="nav-label">← Previous Project</span>
+        <span class="nav-title">{prevProject.title}</span>
+      </a>
+
+      <a href={`/works/${nextProject.id}`} class="nav-card next">
+        <span class="nav-label">Next Project →</span>
+        <span class="nav-title">{nextProject.title}</span>
+      </a>
+    </nav>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style lang="scss">
+  @use '../../styles/tokens/variables' as *;
+
+  .project-detail {
+    padding-top: clamp(6rem, 10vw, 10rem);
+    background-color: $color-bg;
+    color: $color-text;
+  }
+
+  /* ---------------- HERO / HEADER ---------------- */
+  .project-hero {
+    padding-inline: $space-fluid-page;
+    max-width: 1400px;
+    margin-inline: auto;
+
+    .hero-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: clamp(2rem, 4vw, 4rem);
+
+      .back-link {
+        font-size: 0.875rem;
+        letter-spacing: 0.02em;
+        color: $color-muted;
+        text-decoration: none;
+        transition: color $ease-editorial;
+
+        &:hover {
+          color: $color-text;
+        }
+      }
+
+      .project-ref {
+        font-family: $font-caption;
+        font-size: 0.875rem;
+        color: $color-muted;
+      }
+    }
+
+    .title-block {
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+
+      .project-title {
+        font-size: $font-heading-xl;
+        font-weight: 300;
+        line-height: 1.08;
+        letter-spacing: -0.02em;
+        margin-bottom: 1.25rem;
+        color: $color-text;
+      }
+
+      .project-subtitle {
+        font-size: clamp(1.125rem, 1.8vw, 1.4rem);
+        font-weight: 300;
+        line-height: 1.45;
+        color: $color-muted;
+        max-width: 780px;
+      }
+    }
+
+    .meta-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 1.5rem;
+      padding-top: 2rem;
+      margin-bottom: clamp(3rem, 6vw, 5rem);
+
+      .meta-item {
+        dt {
+          text-transform: uppercase;
+          font-size: 0.75rem;
+          letter-spacing: 0.05em;
+          color: $color-muted;
+          margin-bottom: 0.5rem;
+        }
+
+        dd {
+          font-size: 0.95rem;
+          font-weight: 400;
+          letter-spacing: 0.01em;
+          margin: 0;
+          color: $color-text;
+        }
+      }
+    }
+  }
+
+  /* ---------------- COVER SECTION ---------------- */
+  .cover-section {
+    padding-inline: $space-fluid-page;
+    margin-bottom: clamp(4rem, 8vw, 8rem);
+
+    .cover-image-container {
+      width: 100%;
+      height: clamp(400px, 70vh, 850px);
+      overflow: hidden;
+
+      .cover-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        display: block;
+      }
+    }
+  }
+
+  /* ---------------- CONTENT & SPECS ---------------- */
+  .content-section {
+    padding-inline: $space-fluid-page;
+    max-width: 1400px;
+    margin-inline: auto;
+    margin-bottom: clamp(4rem, 10vw, 10rem);
+
+    .content-grid {
+      display: grid;
+      grid-template-columns: 1fr 2fr;
+      gap: clamp(3rem, 6vw, 7rem);
+
+      .specs-col {
+        padding-top: 2rem;
+
+        .specs-heading {
+          text-transform: uppercase;
+          font-size: 0.8rem;
+          font-weight: 500;
+          letter-spacing: 0.04em;
+          color: $color-muted;
+          margin-bottom: 2rem;
+        }
+
+        .specs-list {
+          display: flex;
+          flex-direction: column;
+          gap: 1.25rem;
+
+          .spec-row {
+            display: flex;
+            flex-direction: column;
+            gap: 0.25rem;
+
+            dt {
+              text-transform: uppercase;
+              font-size: 0.75rem;
+              letter-spacing: 0.03em;
+              color: $color-muted;
+            }
+
+            dd {
+              font-size: 0.95rem;
+              margin: 0;
+              color: $color-text;
+            }
+          }
+        }
+      }
+
+      .narrative-col {
+        padding-top: 2rem;
+
+        .lead-summary {
+          font-size: clamp(1.25rem, 2vw, 1.75rem);
+          line-height: 1.45;
+          font-weight: 300;
+          margin-bottom: 2.5rem;
+          color: $color-text;
+        }
+
+        .paragraphs {
+          display: flex;
+          flex-direction: column;
+          gap: 1.75rem;
+
+          p {
+            font-size: clamp(1rem, 1.1vw, 1.125rem);
+            line-height: 1.75;
+            color: $color-muted;
+          }
+        }
+      }
+    }
+  }
+
+  /* ---------------- GALLERY SECTION ---------------- */
+  .gallery-section {
+    padding-inline: $space-fluid-page;
+    margin-bottom: clamp(5rem, 10vw, 10rem);
+
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(1.5rem, 3vw, 3rem);
+
+      .gallery-item {
+        margin: 0;
+
+        &.full {
+          grid-column: 1 / -1;
+
+          .img-wrapper {
+            height: clamp(400px, 65vh, 800px);
+          }
+        }
+
+        &.half {
+          grid-column: span 1;
+
+          .img-wrapper {
+            height: clamp(300px, 45vh, 550px);
+          }
+        }
+
+        .img-wrapper {
+          width: 100%;
+          overflow: hidden;
+          margin-bottom: 0.75rem;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+          }
+        }
+
+        figcaption {
+          font-size: 0.85rem;
+          letter-spacing: 0.01em;
+          color: $color-muted;
+        }
+      }
+    }
+  }
+
+  /* ---------------- PAGINATION ---------------- */
+  .project-pagination {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+
+    .nav-card {
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding: clamp(3rem, 6vw, 6rem) $space-fluid-page;
+      text-decoration: none;
+      color: $color-text;
+      transition: background-color $ease-editorial;
+
+      &:hover {
+        background-color: rgba($color-text, 0.03);
+      }
+
+      &.next {
+        text-align: right;
+      }
+
+      .nav-label {
+        text-transform: uppercase;
+        font-size: 0.8rem;
+        letter-spacing: 0.04em;
+        color: $color-muted;
+      }
+
+      .nav-title {
+        font-size: clamp(1.25rem, 2.8vw, 2.25rem);
+        font-weight: 300;
+        color: $color-text;
+      }
+    }
+  }
+
+  /* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
+  @media (max-width: 900px) {
+    .project-hero .meta-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 1.5rem 1rem;
+    }
+
+    .content-section .content-grid {
+      grid-template-columns: 1fr;
+      gap: 3rem;
+    }
+
+    .gallery-section .gallery-grid {
+      grid-template-columns: 1fr;
+
+      .gallery-item.half {
+        grid-column: 1 / -1;
+
+        .img-wrapper {
+          height: clamp(300px, 50vh, 600px);
+        }
+      }
+    }
+  }
+
+  @media (max-width: 600px) {
+    .project-pagination {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

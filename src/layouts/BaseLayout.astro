@@ -8,11 +8,15 @@ import IntroFlash from '../components/IntroFlash.astro';
 interface Props {
   title?: string;
   description?: string;
+  headerTheme?: 'light' | 'dark';
+  isInnerPage?: boolean;
 }
 
 const { 
   title = "LINDQVIST & VALE — Architectural Practice", 
-  description = "International architectural practice operating between Zürich, New York, and Tokyo." 
+  description = "International architectural practice operating between Zürich, New York, and Tokyo." ,
+  headerTheme = 'dark', 
+  isInnerPage = false
 } = Astro.props;
 ---
 
@@ -24,9 +28,9 @@ const {
     <title>{title}</title>
     <meta name="description" content={description} />
   </head>
-  <body>
+  <body class:list={[{ 'is-inner-page': isInnerPage }]}>
     <IntroFlash />
-    <Header />
+    <Header theme={headerTheme} isInnerPage={isInnerPage} />
     <slot />
 
     <script>

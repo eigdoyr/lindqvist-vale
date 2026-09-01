@@ -1,20 +1,35 @@
 ---
 import { NAV_LINKS } from '../data/navigation';
 import Logo from './Logo.astro';
+
+interface Props {
+  isInnerPage?: boolean;
+  theme?: 'dark' | 'light';
+}
+
+const { isInnerPage = false, theme = 'dark' } = Astro.props;
+const isLightState = isInnerPage || theme === 'light';
 ---
 
-<header class="site-header" id="site-header">
+<header 
+  class:list={[
+    'site-header',
+    { 'is-inner-page': isLightState, 'is-scrolled': isLightState }
+  ]} 
+  id="site-header"
+  data-inner-page={isLightState ? 'true' : 'false'}
+>
   <div class="header-inner">
     <button class="nav-trigger type-caption" id="menu-toggle" aria-expanded="false" aria-controls="mobile-nav">
-      <span class="label-menu">MENU</span>
-      <span class="label-close">CLOSE</span>
+      <span class="label-menu">Menu</span>
+      <span class="label-close">Close</span>
     </button>
 
     <a href="/" class="brand-logo" aria-label="LINDQVIST & VALE Home">
       <Logo />
     </a>
 
-    <a href="#contact" class="contact-link type-caption">CONTACT</a>
+    <a href="#contact" class="contact-link type-caption">Contact</a>
   </div>
 
   <nav class="mobile-overlay" id="mobile-nav" aria-hidden="true">
@@ -26,7 +41,7 @@ import Logo from './Logo.astro';
       ))}
     </ul>
     <div class="drawer-footer type-caption">
-      <span>ZÜRICH / NEW YORK / TOKYO</span>
+      <span>Zürich / New York / Tokyo</span>
       <span>© 2026 LINDQVIST & VALE</span>
     </div>
   </nav>
@@ -39,6 +54,8 @@ import Logo from './Logo.astro';
     const mobileNav = document.getElementById('mobile-nav');
 
     if (!header || !toggleBtn || !mobileNav) return;
+
+    const isInnerPage = header.dataset.innerPage === 'true';
 
     // Menu Drawer Toggle
     const toggleMenu = (open?: boolean) => {
@@ -63,16 +80,22 @@ import Logo from './Logo.astro';
       }
     });
 
-    // Throttled Scroll Listener (100vh Theme Shift)
+    // Scroll Listener
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
-          const threshold = window.innerHeight - 80;
-          if (window.scrollY >= threshold) {
+          if (isInnerPage) {
+            // Inner pages / Light theme locked to solid header state
             header.classList.add('is-scrolled');
           } else {
-            header.classList.remove('is-scrolled');
+            // Home page: 100vh hero threshold switch
+            const threshold = window.innerHeight - 80;
+            if (window.scrollY >= threshold) {
+              header.classList.add('is-scrolled');
+            } else {
+              header.classList.remove('is-scrolled');
+            }
           }
           ticking = false;
         });
@@ -144,10 +167,11 @@ import Logo from './Logo.astro';
 
     .nav-trigger .label-close { display: none; }
 
-    /* SCROLLED STATE PAST HERO */
-    &.is-scrolled:not(.is-open) {
+    /* LIGHT / SCROLLED STATE (Immediate on inner pages, past hero on home) */
+    &.is-scrolled:not(.is-open),
+    &.is-inner-page:not(.is-open) {
       background: $color-bg;
-      
+      border-bottom: 1px solid rgba($color-text, 0.15);
 
       .header-inner { color: $color-text; }
       .nav-trigger, .brand-logo, .contact-link {
