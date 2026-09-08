@@ -43,7 +43,7 @@ export interface StudioData {
 }
 
 const portrait = (id: string) =>
-  `https://images.unsplash.com/${id}?auto=format&fit=crop&crop=faces&w=900&q=80`;
+  `https://images.unsplash.com/${id}?auto=format&fit=crop&crop=faces&w=200&h=250&q=80`;
 
 export const STUDIO_DATA: StudioData = {
   eyebrow: "01 / Studio",
@@ -52,7 +52,7 @@ export const STUDIO_DATA: StudioData = {
   coordinates: "47°22'N 8°32'E",
   founded: "Est. 2018",
   image:
-    "https://images.unsplash.com/photo-1756706718604-ef4af3970e33?q=80&w=1074&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+    "https://images.unsplash.com/photo-1600585152220-90363fe7e115?auto=format&fit=crop&w=2000&q=80",
   alt: "Lindqvist & Vale studio interior, Zürich",
 
   pillars: [

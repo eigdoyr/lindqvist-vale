@@ -40,7 +40,7 @@ const s = STUDIO_DATA;
       </div>
 
       <figure class="intro-figure reveal">
-        <img src={s.image} alt={s.alt} loading="eager" decoding="async" />
+        <img src={s.image} alt={s.alt} loading="lazy" decoding="async" />
       </figure>
     </header>
 
@@ -103,7 +103,7 @@ const s = STUDIO_DATA;
                   height="70"
                 />
                 <span class="team-name">{member.name}</span>
-                <span class="team-role type-body-regular">{member.role}</span>
+                <span class="team-role type-body-small">{member.role}</span>
                 <span class="type-caption team-atelier">{member.atelier}</span>
                 <span class="team-marker" aria-hidden="true"></span>
               </summary>
@@ -284,9 +284,9 @@ const s = STUDIO_DATA;
 
     .parameter-figure {
       display: block;
-      font-size: $font-heading-l;
+      font-size: clamp(1.75rem, 2.8vw, 2.375rem);
       line-height: 1;
-      letter-spacing: -0.14em;
+      letter-spacing: -0.04em;
       font-variant-numeric: tabular-nums;
       margin-bottom: 0.7rem;
     }
