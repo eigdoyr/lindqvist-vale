@@ -30,6 +30,7 @@ const isHome = Astro.url.pathname === '/';
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="format-detection" content="telephone=no" />
   </head>
   <body class:list={[{ 'is-inner-page': isInnerPage }]}>
     {isHome && <IntroFlash />}
