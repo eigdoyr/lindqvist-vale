@@ -1,7 +1,4 @@
-export interface NavItem {
-  label: string;
-  href: string;
-}
+import type { NavItem } from "../types";
 
 export const NAV_LINKS: NavItem[] = [
   { label: "SELECTED WORKS", href: "/#works" },

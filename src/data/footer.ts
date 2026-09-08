@@ -1,14 +1,21 @@
+import type { NavItem } from "../types";
+
 export interface OfficeLocation {
   city: string;
   address: string;
 }
 
-export interface NavItem {
-  label: string;
-  href: string;
+export interface FooterData {
+  heading: string;
+  subtext: string;
+  email: string;
+  phone: string;
+  offices: OfficeLocation[];
+  sitemap: NavItem[];
+  socials: NavItem[];
 }
 
-export const FOOTER_DATA = {
+export const FOOTER_DATA: FooterData = {
   heading: "Start a Dialogue",
   subtext:
     "We are currently accepting select architectural and interior commissions for 2026/2027.",
