@@ -13,36 +13,19 @@ import Logo from './Logo.astro';
     const curtain = document.getElementById('intro-flash');
     if (!curtain) return;
 
-    // Respect reduced motion settings
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      curtain.style.display = 'none';
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
+    const release = () => {
       document.body.style.overflow = '';
-      return;
-    }
+    };
 
     document.body.style.overflow = 'hidden';
+    curtain.addEventListener('animationend', release, { once: true });
 
-    // Dismiss curtain after hold
-    const dismissTimer = setTimeout(() => {
-      curtain.classList.add('is-dismissed');
-      document.body.style.overflow = '';
-    }, 800);
 
-    // Hard safety timeout in case transitionend fails
-    const safetyTimer = setTimeout(() => {
-      curtain.style.display = 'none';
-      document.body.style.overflow = '';
-    }, 2200);
-
-    curtain.addEventListener('transitionend', (e) => {
-      if (e.propertyName === 'transform') {
-        clearTimeout(safetyTimer);
-        curtain.style.display = 'none';
-      }
-    });
+    setTimeout(release, 2200);
   };
 
-  // Supports standard load and Astro Client Router navigation
   document.addEventListener('astro:page-load', initIntro);
   if (document.readyState !== 'loading') initIntro();
 </script>
@@ -55,19 +38,18 @@ import Logo from './Logo.astro';
     inset: 0;
     z-index: 9999;
     background-color: #0e0e0e;
-    transition: transform 1.1s cubic-bezier(0.76, 0, 0.24, 1);
     will-change: transform;
+    animation: curtainDismiss 1.9s $ease-editorial forwards;
 
     .logo-wrapper {
       position: absolute;
       top: 50%;
       left: 50%;
-      transform: translate(-50%, -50%);
       width: min(65vw, 320px);
       color: #ffffff;
       opacity: 0;
-      animation: logoReveal 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
-      transition: opacity 0.3s ease, transform 0.3s ease;
+      transform: translate(-50%, calc(-50% + 6px)) scale(0.95);
+      animation: logoReveal 1.9s $ease-out-editorial forwards;
 
       :global(svg) {
         width: 100%;
@@ -76,14 +58,22 @@ import Logo from './Logo.astro';
         fill: currentColor;
       }
     }
+  }
 
-    &.is-dismissed {
+  /* Single timeline: hold, lift, then remove from the page for good. */
+  @keyframes curtainDismiss {
+    0%,
+    42% {
+      transform: translateY(0);
+      visibility: visible;
+    }
+    99% {
       transform: translateY(-100%);
-
-      .logo-wrapper {
-        opacity: 0 !important;
-        transform: translate(-50%, calc(-50% - 10px));
-      }
+      visibility: visible;
+    }
+    100% {
+      transform: translateY(-100%);
+      visibility: hidden;
     }
   }
 
@@ -92,9 +82,21 @@ import Logo from './Logo.astro';
       opacity: 0;
       transform: translate(-50%, calc(-50% + 6px)) scale(0.95);
     }
-    100% {
+    16%,
+    42% {
       opacity: 1;
       transform: translate(-50%, -50%) scale(1);
+    }
+    58%,
+    100% {
+      opacity: 0;
+      transform: translate(-50%, calc(-50% - 10px)) scale(1);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .intro-curtain {
+      display: none;
     }
   }
 </style>
