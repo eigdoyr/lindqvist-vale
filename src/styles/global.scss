@@ -24,6 +24,11 @@ body {
   overflow-x: hidden;
 }
 
+body.is-intro-locked,
+body.is-menu-locked {
+  overflow: hidden;
+}
+
 img,
 video {
   max-width: 100%;

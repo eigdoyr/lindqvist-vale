@@ -16,13 +16,13 @@ import Logo from './Logo.astro';
     if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
     const release = () => {
-      document.body.style.overflow = '';
+      document.body.classList.remove('is-intro-locked');
     };
 
-    document.body.style.overflow = 'hidden';
+    document.body.classList.add('is-intro-locked');
     curtain.addEventListener('animationend', release, { once: true });
 
-    // Fallback: animationend does not fire if the tab is backgrounded.
+    // Fallback: animation end does not fire if the tab is backgrounded.
     setTimeout(release, 2200);
   };
 
