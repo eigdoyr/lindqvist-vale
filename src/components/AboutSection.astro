@@ -2,6 +2,14 @@
 import SectionHeader from './SectionHeader.astro';
 import { ABOUT_DATA } from '../data/about';
 import { PROJECTS } from '../data/projects';
+
+const cities = ABOUT_DATA.locations;
+
+const separator = (i: number) => {
+  if (i === 0) return '';
+  if (i < cities.length - 1) return ', ';
+  return cities.length > 2 ? ', and ' : ' and ';
+};
 ---
 
 <section class="about-section" id="about">
@@ -15,10 +23,11 @@ import { PROJECTS } from '../data/projects';
 
   <div class="about-content reveal">
     <h2 class="type-heading-xl about-statement">
-      {ABOUT_DATA.statementPrefix}{' '}
-      <em>{ABOUT_DATA.locations[0]}</em>,{' '}
-      <em>{ABOUT_DATA.locations[1]}</em>, and{' '}
-      <em>{ABOUT_DATA.locations[2]}</em>.{' '}
+      {ABOUT_DATA.statementPrefix}
+      {cities.map((city, i) => (
+        <>{separator(i)}<em>{city}</em></>
+      ))}
+      {'. '}
       {ABOUT_DATA.statementSuffix}
     </h2>
   </div>
@@ -42,25 +51,35 @@ import { PROJECTS } from '../data/projects';
 </section>
 
 <script>
-  const slideshow = document.getElementById('about-slideshow');
-  if (slideshow) {
-    const slides = slideshow.querySelectorAll('.slide');
-    const ticks = slideshow.querySelectorAll('.line-tick');
+  let timer: number | undefined;
+
+  const initSlideshow = () => {
+    clearInterval(timer);
+
+    const slideshow = document.getElementById('about-slideshow');
+    if (!slideshow) return;
+
+    const slides = [...slideshow.querySelectorAll('.slide')];
+    const ticks = [...slideshow.querySelectorAll('.line-tick')];
+
+    if (slides.length < 2) return;
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+
     let current = 0;
-    const total = slides.length;
 
-    if (total > 1) {
-      setInterval(() => {
-        slides[current].classList.remove('is-active');
-        if (ticks[current]) ticks[current].classList.remove('is-active');
+    timer = window.setInterval(() => {
+      slides[current].classList.remove('is-active');
+      ticks[current]?.classList.remove('is-active');
 
-        current = (current + 1) % total;
+      current = (current + 1) % slides.length;
 
-        slides[current].classList.add('is-active');
-        if (ticks[current]) ticks[current].classList.add('is-active');
-      }, 4500);
-    }
-  }
+      slides[current].classList.add('is-active');
+      ticks[current]?.classList.add('is-active');
+    }, 4500);
+  };
+
+  document.addEventListener('astro:page-load', initSlideshow);
+  if (document.readyState !== 'loading') initSlideshow();
 </script>
 
 <style lang="scss">
