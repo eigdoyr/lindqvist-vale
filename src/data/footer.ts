@@ -20,10 +20,10 @@ export const FOOTER_DATA = {
     { city: "TOKYO", address: "5-7-2 Minami-Aoyama, Minato-ku 107-0062" },
   ],
   sitemap: [
-    { label: "Selected Works", href: "#works" },
-    { label: "Studio Profile", href: "#about" },
-    { label: "Publications", href: "#publications" },
-    { label: "Contact", href: "#contact" },
+    { label: "Selected Works", href: "/#works" },
+    { label: "Studio Profile", href: "/#about" },
+    { label: "Publications", href: "/#publications" },
+    { label: "Contact", href: "/#contact" },
   ],
   socials: [
     { label: "Instagram", href: "https://instagram.com" },

@@ -12,7 +12,7 @@ export interface AboutData {
 export const ABOUT_DATA: AboutData = {
   tag: "02 / ABOUT",
   linkText: "More About Studio Profile →",
-  linkHref: "#about",
+  linkHref: "/#about",
   statementPrefix:
     "Founded in 2018, Lindqvist & Vale is an international architectural practice operating between ",
   locations: ["Zürich", "New York", "Tokyo"],
