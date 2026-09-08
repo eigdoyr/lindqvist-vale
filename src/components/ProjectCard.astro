@@ -1,17 +1,26 @@
 ---
 import type { Project } from '../data/projects';
+import { srcset } from '../lib/images';
 
 interface Props {
   project: Project;
+  sizes?: string;
 }
 
-const { project } = Astro.props;
+const { project, sizes = '(max-width: 768px) 85vw, min(56vw, 785px)' } = Astro.props;
 ---
 
 <article class="project-card reveal">
   <a href={project.href} class="card-link">
     <div class="image-frame">
-      <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
+      <img
+        src={project.image}
+        srcset={srcset(project.image)}
+        sizes={sizes}
+        alt={project.alt}
+        loading="lazy"
+        decoding="async"
+      />
     </div>
     <div class="card-info">
       <h3 class="type-heading-l card-title">{project.title}</h3>
@@ -44,13 +53,11 @@ const { project } = Astro.props;
       background-color: rgba($color-muted, 0.1);
       margin-bottom: 1.25rem;
 
-
       img {
         width: 100%;
         height: 100%;
         object-fit: cover;
         transition: transform 0.8s $ease-editorial;
-
       }
 
       &:hover img {

@@ -1,11 +1,14 @@
 ---
 import { HERO_DATA } from '../data/siteData';
+import { srcset } from '../lib/images';
 ---
 
 <section class="hero-section">
   <div class="hero-media-wrapper">
     <img
       src={HERO_DATA.bgImage}
+      srcset={srcset(HERO_DATA.bgImage)}
+      sizes="100vw"
       alt={HERO_DATA.alt}
       loading="eager"
       fetchpriority="high"

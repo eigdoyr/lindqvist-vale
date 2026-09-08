@@ -2,6 +2,7 @@
 import SectionHeader from './SectionHeader.astro';
 import { ABOUT_DATA } from '../data/about';
 import { PROJECTS } from '../data/projects';
+import { srcset } from '../lib/images';
 
 const cities = ABOUT_DATA.locations;
 
@@ -36,7 +37,14 @@ const separator = (i: number) => {
     <div class="slides-container">
       {PROJECTS.map((project, index) => (
         <div class={`slide ${index === 0 ? 'is-active' : ''}`} data-slide={index}>
-          <img src={project.image} alt={project.alt} loading="lazy" decoding="async" />
+          <img
+            src={project.image}
+            srcset={srcset(project.image)}
+            sizes="100vw"
+            alt={project.alt}
+            loading="lazy"
+            decoding="async"
+          />
         </div>
       ))}
       <div class="slide-overlay"></div>

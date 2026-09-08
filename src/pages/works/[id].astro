@@ -2,6 +2,7 @@
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import Footer from '../../components/Footer.astro';
 import { PROJECTS, type Project } from '../../data/projects';
+import { srcset } from '../../lib/images';
 
 export async function getStaticPaths() {
   return PROJECTS.map((project, index) => {
@@ -63,7 +64,14 @@ const { project, nextProject, prevProject } = Astro.props;
 
     <section class="cover-section">
       <div class="cover-image-container">
-        <img src={project.image} alt={project.alt} class="cover-image" />
+        <img
+          src={project.image}
+          srcset={srcset(project.image)}
+          sizes="100vw"
+          alt={project.alt}
+          class="cover-image"
+          fetchpriority="high"
+        />
       </div>
     </section>
 
@@ -115,7 +123,13 @@ const { project, nextProject, prevProject } = Astro.props;
           {project.gallery.map((item) => (
             <figure class={`gallery-item ${item.layout || 'full'}`}>
               <div class="img-wrapper">
-                <img src={item.url} alt={item.alt} loading="lazy" />
+                <img
+                  src={item.url}
+                  srcset={srcset(item.url)}
+                  sizes={item.layout === "half" ? "(max-width: 900px) 100vw, 50vw" : "100vw"}
+                  alt={item.alt}
+                  loading="lazy"
+                />
               </div>
               {item.caption && <figcaption>{item.caption}</figcaption>}
             </figure>

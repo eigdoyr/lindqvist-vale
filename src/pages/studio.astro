@@ -3,6 +3,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import Footer from '../components/Footer.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { STUDIO_DATA } from '../data/studio';
+import { srcset } from '../lib/images';
 
 const s = STUDIO_DATA;
 ---
@@ -40,7 +41,14 @@ const s = STUDIO_DATA;
       </div>
 
       <figure class="intro-figure reveal">
-        <img src={s.image} alt={s.alt} loading="lazy" decoding="async" />
+        <img
+          src={s.image}
+          srcset={srcset(s.image)}
+          sizes="100vw"
+          alt={s.alt}
+          loading="lazy"
+          decoding="async"
+        />
       </figure>
     </header>
 
