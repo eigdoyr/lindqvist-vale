@@ -1,0 +1,122 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import Footer from '../../components/Footer.astro';
+import ProjectCard from '../../components/ProjectCard.astro';
+import { PROJECTS } from '../../data/projects';
+
+const years = PROJECTS.map((project) => Number(project.year)).filter(Number.isFinite);
+const range = years.length ? `${Math.min(...years)}—${Math.max(...years)}` : '';
+const count = String(PROJECTS.length).padStart(2, '0');
+---
+
+<BaseLayout
+  title="Selected works — LINDQVIST & VALE"
+  description="Residential, cultural, and adaptive reuse projects by Lindqvist & Vale."
+  isInnerPage={true}
+>
+  <main class="works-index">
+    <div class="section-inner">
+      <header class="index-header">
+        <span class="type-caption index-eyebrow">Index</span>
+        <h1 class="type-heading-xl index-title">
+          Selected <em>works</em>
+        </h1>
+        <dl class="index-meta type-caption">
+          <div>
+            <dt>Projects</dt>
+            <dd>{count}</dd>
+          </div>
+          {range && (
+            <div>
+              <dt>Years</dt>
+              <dd>{range}</dd>
+            </div>
+          )}
+          <div>
+            <dt>Ateliers</dt>
+            <dd>Zürich / New York / Tokyo</dd>
+          </div>
+        </dl>
+      </header>
+
+      <div class="project-grid">
+        {PROJECTS.map((project) => (
+          <ProjectCard project={project} />
+        ))}
+      </div>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style lang="scss">
+  @use '../../styles/tokens/variables' as *;
+
+  $content-max: 2500px;
+
+  .works-index {
+    background-color: $color-bg;
+    color: $color-text;
+    padding-top: clamp(7rem, 12vw, 11rem);
+    padding-bottom: $space-section-y;
+    padding-inline: $space-fluid-page;
+  }
+
+  .section-inner {
+    max-width: $content-max;
+    margin-inline: auto;
+  }
+
+  .index-header {
+    margin-bottom: clamp(3rem, 7vw, 5.5rem);
+
+    .index-eyebrow {
+      display: block;
+      color: $color-muted;
+      margin-bottom: clamp(2.5rem, 6vw, 5rem);
+    }
+
+    .index-title {
+      line-height: 1.06;
+      margin-bottom: clamp(2rem, 4vw, 3rem);
+
+      em {
+        font-style: italic;
+        font-family: $font-lora;
+      }
+    }
+
+    .index-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: clamp(1.5rem, 4vw, 3.5rem);
+      border-top: 1px solid $color-border;
+      padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+
+      dt {
+        color: $color-muted;
+        margin-bottom: 0.45rem;
+      }
+
+      dd {
+        margin: 0;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+  }
+
+  .project-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    column-gap: clamp(1.5rem, 3vw, 2.75rem);
+    row-gap: clamp(2.5rem, 5vw, 4.5rem);
+  }
+
+  @media (max-width: 640px) {
+    .project-grid {
+
+      row-gap: clamp(2.5rem, 8vw, 3.5rem);
+    }
+  }
+</style>

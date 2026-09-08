@@ -27,8 +27,8 @@ export const FOOTER_DATA: FooterData = {
     { city: "TOKYO", address: "5-7-2 Minami-Aoyama, Minato-ku 107-0062" },
   ],
   sitemap: [
-    { label: "Selected Works", href: "/#works" },
-    { label: "Studio", href: "/about" },
+    { label: "Selected Works", href: "/works" },
+    { label: "Studio", href: "/studio" },
     { label: "Contact", href: "#contact" },
   ],
   socials: [

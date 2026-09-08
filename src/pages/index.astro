@@ -5,7 +5,7 @@ import SectionHeader from '../components/SectionHeader.astro';
 import ProjectCard from '../components/ProjectCard.astro';
 import AboutSection from '../components/AboutSection.astro';
 import Footer from '../components/Footer.astro';
-import { PROJECTS } from '../data/projects';
+import { FEATURED_PROJECTS } from '../data/projects';
 ---
 
 <BaseLayout>
@@ -23,13 +23,13 @@ import { PROJECTS } from '../data/projects';
         <SectionHeader
           tag="01 / SELECTED WORKS"
           linkText="View All Works →"
-          linkHref="#works"
+          linkHref="/works"
         />
       </div>
 
       <div class="works-scroll-container">
         <div class="works-track">
-          {PROJECTS.map((project) => (
+          {FEATURED_PROJECTS.map((project) => (
             <div class="card-slide">
               <ProjectCard project={project} />
             </div>

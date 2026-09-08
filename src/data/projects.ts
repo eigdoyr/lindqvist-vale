@@ -26,12 +26,14 @@ export interface Project {
   paragraphs?: string[];
   specs?: ProjectSpec[];
   gallery?: GalleryItem[];
+  featured?: boolean;
 }
 
 export const PROJECTS: Project[] = [
   {
     ref: "01",
     id: "ridge-house",
+    featured: true,
     title: "The Ridge House",
     subtitle:
       "A linear timber volume cantilevered over the Nagano forest slope.",
@@ -82,6 +84,7 @@ export const PROJECTS: Project[] = [
   {
     ref: "02",
     id: "glass-pavilion",
+    featured: true,
     title: "The Glass Pavilion",
     subtitle: "Dematerialized living framed within Berkshire woodland.",
     typology: "Residential",
@@ -115,6 +118,7 @@ export const PROJECTS: Project[] = [
   {
     ref: "03",
     id: "monolith-residence",
+    featured: true,
     title: "Monolith Residence",
     subtitle: "A sculpted concrete villa overlooking Lake Zürich.",
     typology: "Residential",
@@ -147,6 +151,7 @@ export const PROJECTS: Project[] = [
   {
     ref: "04",
     id: "kyoto-atelier",
+    featured: true,
     title: "Kyoto Atelier",
     subtitle: "Restoration and modern insertion inside a Machiya courtyard.",
     typology: "Commercial",
@@ -260,3 +265,7 @@ export const PROJECTS: Project[] = [
     gallery: [],
   },
 ];
+
+export const FEATURED_PROJECTS: Project[] = PROJECTS.filter(
+  (project) => project.featured,
+);
