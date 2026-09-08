@@ -53,10 +53,10 @@ export const PROJECTS: Project[] = [
       "Materials were limited strictly to local Japanese Larch, blackened Yakisugi siding, and board-formed concrete poured on site. Over time, the exterior timber will weather into silver-gray tones, further blending the building into the forest canopy.",
     ],
     specs: [
-      { label: "LEAD ARCHITECT", value: "Erik Lindqvist, Hana Sato" },
-      { label: "STRUCTURAL ENGINEER", value: "Kuroda Engineering" },
-      { label: "FACADE MATERIAL", value: "Shou Sugi Ban (Yakisugi) Cedar" },
-      { label: "COMPLETION", value: "November 2025" },
+      { label: "Lead architect", value: "Erik Lindqvist, Hana Sato" },
+      { label: "Structural engineer", value: "Kuroda Engineering" },
+      { label: "Facade material", value: "Shou Sugi Ban (Yakisugi) Cedar" },
+      { label: "Completion", value: "November 2025" },
     ],
     gallery: [
       {
@@ -102,9 +102,9 @@ export const PROJECTS: Project[] = [
       "The perimeter is entirely wrapped in structural triple-pane glass units, low-iron engineered for absolute neutrality. Radiant basalt floor slabs provide silent heating throughout harsh winter freezes.",
     ],
     specs: [
-      { label: "LEAD ARCHITECT", value: "Astrid Vale" },
-      { label: "LIGHTING DESIGN", value: "Studio Atelier NY" },
-      { label: "GLAZING SPEC", value: "Triple-Pane Low-E Low-Iron" },
+      { label: "Lead architect", value: "Astrid Vale" },
+      { label: "Lighting design", value: "Studio Atelier NY" },
+      { label: "Glazing spec", value: "Triple-Pane Low-E Low-Iron" },
     ],
     gallery: [
       {
@@ -136,8 +136,8 @@ export const PROJECTS: Project[] = [
       "The interior plan revolves around a double-height atrium that connects the upper private bedrooms to the garden level below.",
     ],
     specs: [
-      { label: "LEAD ARCHITECT", value: "Erik Lindqvist" },
-      { label: "CONCRETE TYPE", value: "Insitu Insulated Monolithic Concrete" },
+      { label: "Lead architect", value: "Erik Lindqvist" },
+      { label: "Concrete type", value: "Insitu Insulated Monolithic Concrete" },
     ],
     gallery: [
       {
@@ -168,8 +168,8 @@ export const PROJECTS: Project[] = [
       "Respecting the historical urban grain of Kyoto, this project combines delicate timber preservation with minimalist bronze and glass insertions. A central moss garden brings calm ventilation throughout the workspace.",
     ],
     specs: [
-      { label: "LEAD ARCHITECT", value: "Hana Sato" },
-      { label: "CRAFT PARTNERS", value: "Kyoto Timber Guild" },
+      { label: "Lead architect", value: "Hana Sato" },
+      { label: "Craft partners", value: "Kyoto Timber Guild" },
     ],
     gallery: [],
   },
@@ -193,8 +193,8 @@ export const PROJECTS: Project[] = [
       "Designed to withstand coastal saline breeze while maintaining high thermal mass, Dune Residence relies on thick rammed-earth piers, expansive shaded verandas, and natural pine decking.",
     ],
     specs: [
-      { label: "LEAD ARCHITECT", value: "Astrid Vale" },
-      { label: "EARTH CONTRACTOR", value: "Terra Form Studio" },
+      { label: "Lead architect", value: "Astrid Vale" },
+      { label: "Earth contractor", value: "Terra Form Studio" },
     ],
     gallery: [],
   },
@@ -217,7 +217,7 @@ export const PROJECTS: Project[] = [
     paragraphs: [
       "Designed as a quiet sanctuary for contemporary sculpture, Monolith Gallery uses raw pigmented concrete and volcanic aggregate to echo the rugged Icelandic landscape.",
     ],
-    specs: [{ label: "LEAD ARCHITECT", value: "Erik Lindqvist" }],
+    specs: [{ label: "Lead architect", value: "Erik Lindqvist" }],
     gallery: [],
   },
   {
@@ -239,7 +239,7 @@ export const PROJECTS: Project[] = [
     paragraphs: [
       "Retaining the historic industrial shell, internal partitions were replaced with translucent acoustic glass screens, creating flexible open workspaces.",
     ],
-    specs: [{ label: "LEAD ARCHITECT", value: "Astrid Vale" }],
+    specs: [{ label: "Lead architect", value: "Astrid Vale" }],
     gallery: [],
   },
   {
@@ -261,7 +261,7 @@ export const PROJECTS: Project[] = [
     paragraphs: [
       "Designed as an experimental shelter for wind observation, Sanctuary of Light uses self-tensioning cable stays and prefabricated cross-laminated timber panels.",
     ],
-    specs: [{ label: "RESEARCH LEAD", value: "Lindqvist & Vale Lab" }],
+    specs: [{ label: "Research lead", value: "Lindqvist & Vale Lab" }],
     gallery: [],
   },
 ];

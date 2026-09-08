@@ -10,7 +10,7 @@ export interface AboutData {
 }
 
 export const ABOUT_DATA: AboutData = {
-  tag: "02 / ABOUT",
+  tag: "02 / About",
   linkText: "Read the studio profile →",
   linkHref: "/studio",
   statementPrefix:
