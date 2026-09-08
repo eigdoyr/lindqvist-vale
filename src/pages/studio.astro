@@ -1,0 +1,586 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import { STUDIO_DATA, STUDIO_SECTIONS } from '../data/studio';
+
+const s = STUDIO_DATA;
+---
+
+<BaseLayout
+  title="Studio — LINDQVIST & VALE"
+  description="Lindqvist & Vale is an architectural practice operating between Zürich, New York, and Tokyo."
+  isInnerPage={true}
+>
+  <main class="studio">
+    <nav class="section-index" aria-label="Page sections">
+      <ol>
+        {STUDIO_SECTIONS.map((section) => (
+          <li>
+            <a href={`#${section.id}`} data-index-link={section.id}>
+              <span class="index-ref">{section.ref}</span>
+              <span class="index-label">{section.label}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </nav>
+
+    <header class="studio-intro" id="studio">
+      <div class="intro-grid">
+        <div class="intro-copy">
+          <span class="type-caption intro-eyebrow">{s.eyebrow}</span>
+          <h1 class="intro-headline">
+            {s.headline.map((line) => <span>{line}</span>)}
+          </h1>
+          <p class="intro-lead type-body-regular">{s.lead}</p>
+          <dl class="intro-meta type-caption">
+            <div>
+              <dt>Coordinates</dt>
+              <dd>{s.coordinates}</dd>
+            </div>
+            <div>
+              <dt>Practice</dt>
+              <dd>{s.founded}</dd>
+            </div>
+          </dl>
+        </div>
+
+        <figure class="intro-figure reveal">
+          <img src={s.image} alt={s.alt} loading="eager" decoding="async" />
+        </figure>
+      </div>
+    </header>
+
+    <section class="studio-philosophy site-section" id="philosophy">
+      <SectionHeader tag="02 / Philosophy" />
+      <ol class="pillar-grid">
+        {s.pillars.map((pillar) => (
+          <li class="pillar reveal">
+            <span class="type-caption pillar-ref">{pillar.ref}</span>
+            <h2 class="pillar-title">{pillar.title}</h2>
+            <p class="pillar-body type-body-regular">{pillar.body}</p>
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section class="studio-parameters site-section" id="parameters">
+      <SectionHeader tag="03 / Operational parameters" />
+      <div class="parameters-grid">
+        <figure class="parameters-figure reveal">
+          <img src={s.parametersImage} alt={s.parametersAlt} loading="lazy" decoding="async" />
+        </figure>
+
+        <div class="parameters-copy">
+          <blockquote class="parameters-quote">
+            <p>{s.quote}</p>
+          </blockquote>
+
+          <dl class="parameters-list">
+            {s.parameters.map((parameter) => (
+              <div class="parameter">
+                <dt class="type-caption">{parameter.label}</dt>
+                <dd>
+                  <span class="parameter-value">{parameter.value}</span>
+                  <span class="parameter-note type-body-small">{parameter.note}</span>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="studio-leadership site-section" id="leadership">
+      <SectionHeader tag="04 / Studio leadership" />
+      <div class="team-list">
+        {s.team.map((member) => (
+          <details class="team-row" name="team">
+            <summary>
+              <span class="type-caption team-ref">{member.ref}</span>
+              <span class="team-name">{member.name}</span>
+              <span class="team-role type-body-small">{member.role}</span>
+              <span class="type-caption team-atelier">{member.atelier}</span>
+              <span class="team-marker" aria-hidden="true"></span>
+            </summary>
+
+            <div class="team-panel">
+              <figure class="team-figure">
+                <img src={member.portrait} alt={member.alt} loading="lazy" decoding="async" />
+              </figure>
+              <div class="team-detail">
+                <p class="team-bio type-body-regular">{member.bio}</p>
+                <dl class="team-meta type-caption">
+                  <div>
+                    <dt>Atelier</dt>
+                    <dd>{member.atelier}</dd>
+                  </div>
+                  <div>
+                    <dt>Education</dt>
+                    <dd>{member.education}</dd>
+                  </div>
+                  <div>
+                    <dt>Focus</dt>
+                    <dd>{member.focus}</dd>
+                  </div>
+                </dl>
+              </div>
+            </div>
+          </details>
+        ))}
+      </div>
+    </section>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<script>
+  let teardown: AbortController | null = null;
+
+  const setupSectionIndex = () => {
+    teardown?.abort();
+    teardown = new AbortController();
+
+    const index = document.querySelector('.section-index');
+    if (!index) return;
+
+    const links = new Map<string, HTMLElement>();
+    index.querySelectorAll<HTMLElement>('[data-index-link]').forEach((link) => {
+      const id = link.dataset.indexLink;
+      if (id) links.set(id, link);
+    });
+
+    const sections = [...links.keys()]
+      .map((id) => document.getElementById(id))
+      .filter((el): el is HTMLElement => el !== null);
+
+    if (!sections.length) return;
+
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (!entry.isIntersecting) return;
+          links.forEach((link) => link.removeAttribute('aria-current'));
+          links.get(entry.target.id)?.setAttribute('aria-current', 'true');
+        });
+      },
+      { rootMargin: '-45% 0px -50% 0px' }
+    );
+
+    sections.forEach((section) => observer.observe(section));
+    index.classList.add('is-live');
+
+    teardown.signal.addEventListener('abort', () => observer.disconnect());
+  };
+
+  document.addEventListener('astro:page-load', setupSectionIndex);
+  if (document.readyState !== 'loading') setupSectionIndex();
+</script>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  .studio {
+    background-color: $color-bg;
+    color: $color-text;
+  }
+
+  .section-index {
+    position: fixed;
+    top: 50%;
+    left: $space-fluid-page;
+    transform: translateY(-50%);
+    z-index: 100;
+    display: none;
+
+    ol {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.85rem;
+    }
+
+    a {
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      text-decoration: none;
+      color: $color-muted;
+      font-size: $font-caption;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      transition: color 0.4s $ease-editorial;
+
+      &::before {
+        content: '';
+        width: 14px;
+        height: 1px;
+        background-color: currentColor;
+        transition: width 0.4s $ease-editorial;
+      }
+
+      &:hover,
+      &[aria-current] {
+        color: $color-text;
+      }
+
+      &[aria-current]::before {
+        width: 28px;
+      }
+    }
+
+    .index-ref {
+      font-variant-numeric: tabular-nums;
+    }
+
+    .index-label {
+      opacity: 0;
+      transform: translateX(-4px);
+      transition: opacity 0.4s $ease-editorial, transform 0.4s $ease-editorial;
+    }
+
+    a:hover .index-label,
+    a[aria-current] .index-label {
+      opacity: 1;
+      transform: translateX(0);
+    }
+
+    @media (min-width: 1280px) {
+      display: block;
+    }
+  }
+
+  .studio-intro {
+    padding-inline: $space-fluid-page;
+    padding-top: clamp(7rem, 12vw, 11rem);
+    padding-bottom: $space-section-y-sm;
+
+    .intro-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 5fr) minmax(0, 7fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: end;
+    }
+
+    .intro-eyebrow {
+      display: block;
+      color: $color-muted;
+      margin-bottom: clamp(2rem, 5vw, 4rem);
+    }
+
+    .intro-headline {
+      font-size: $font-heading-xl;
+      font-weight: 400;
+      line-height: 1.06;
+      letter-spacing: -0.04em;
+      margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+
+      span {
+        display: block;
+      }
+    }
+
+    .intro-lead {
+      color: $color-muted;
+      max-width: 34ch;
+      line-height: 1.55;
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .intro-meta {
+      display: flex;
+      gap: clamp(1.5rem, 4vw, 3rem);
+      border-top: 1px solid $color-border;
+      padding-top: 1rem;
+
+      dt {
+        color: $color-muted;
+        margin-bottom: 0.4rem;
+      }
+
+      dd {
+        margin: 0;
+        font-variant-numeric: tabular-nums;
+      }
+    }
+
+    .intro-figure {
+      margin: 0;
+      aspect-ratio: 4 / 3;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+  }
+
+  .studio-philosophy {
+    .pillar-grid {
+      list-style: none;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: clamp(2rem, 5vw, 4.5rem);
+    }
+
+    .pillar {
+      display: flex;
+      flex-direction: column;
+      border-top: 1px solid $color-border;
+      padding-top: 1.25rem;
+    }
+
+    .pillar-ref {
+      color: $color-muted;
+      margin-bottom: clamp(2rem, 5vw, 3.5rem);
+    }
+
+    .pillar-title {
+      font-size: $font-heading-l;
+      font-weight: 400;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      margin-bottom: 1rem;
+      max-width: 12ch;
+    }
+
+    .pillar-body {
+      color: $color-muted;
+      line-height: 1.6;
+    }
+  }
+
+  .studio-parameters {
+    .parameters-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 6fr) minmax(0, 6fr);
+      gap: clamp(2rem, 6vw, 6rem);
+      align-items: start;
+    }
+
+    .parameters-figure {
+      margin: 0;
+      aspect-ratio: 1 / 1;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .parameters-quote {
+      margin: 0 0 clamp(2.5rem, 6vw, 4.5rem);
+
+      p {
+        font-size: $font-heading-l;
+        font-weight: 400;
+        font-style: italic;
+        line-height: 1.22;
+        letter-spacing: -0.03em;
+        text-wrap: balance;
+
+        &::before { content: '\201C'; }
+        &::after { content: '\201D'; }
+      }
+    }
+
+    .parameters-list {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: clamp(1.75rem, 4vw, 3rem);
+    }
+
+    .parameter {
+      border-top: 1px solid $color-border;
+      padding-top: 0.9rem;
+
+      dt {
+        color: $color-muted;
+        margin-bottom: 0.75rem;
+      }
+
+      dd {
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        gap: 0.4rem;
+      }
+    }
+
+    .parameter-value {
+      font-size: clamp(1rem, 1.3vw, 1.125rem);
+      line-height: 1.25;
+    }
+
+    .parameter-note {
+      color: $color-muted;
+      line-height: 1.45;
+    }
+  }
+
+  .studio-leadership {
+    .team-list {
+      border-top: 1px solid $color-border;
+    }
+
+    .team-row {
+      border-bottom: 1px solid $color-border;
+    }
+
+    summary {
+      list-style: none;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 7fr) minmax(0, 8fr) minmax(0, 4fr) 1.5rem;
+      align-items: baseline;
+      gap: 1rem;
+      padding-block: clamp(1.25rem, 2.5vw, 1.9rem);
+      transition: opacity 0.3s $ease-editorial;
+
+      &::-webkit-details-marker { display: none; }
+
+      &:hover { opacity: 0.6; }
+
+      &:focus-visible {
+        outline: 1px solid $color-text;
+        outline-offset: 4px;
+      }
+    }
+
+    .team-ref,
+    .team-atelier,
+    .team-role {
+      color: $color-muted;
+    }
+
+    .team-name {
+      font-size: clamp(1.25rem, 2.2vw, 1.85rem);
+      line-height: 1.15;
+      letter-spacing: -0.03em;
+    }
+
+    .team-marker {
+      justify-self: end;
+      position: relative;
+      width: 11px;
+      height: 11px;
+
+      &::before,
+      &::after {
+        content: '';
+        position: absolute;
+        top: 50%;
+        left: 0;
+        width: 11px;
+        height: 1px;
+        background-color: $color-text;
+        transition: transform 0.4s $ease-editorial;
+      }
+
+      &::after { transform: rotate(90deg); }
+    }
+
+    .team-row[open] .team-marker::after {
+      transform: rotate(0deg);
+    }
+
+    .team-panel {
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 7fr) minmax(0, 12fr);
+      gap: 1rem;
+      padding-bottom: clamp(2rem, 4vw, 3.5rem);
+    }
+
+    .team-figure {
+      grid-column: 2;
+      margin: 0;
+      aspect-ratio: 4 / 5;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+    }
+
+    .team-detail {
+      grid-column: 3;
+      display: flex;
+      flex-direction: column;
+      gap: clamp(1.5rem, 3vw, 2.5rem);
+      max-width: 62ch;
+    }
+
+    .team-bio {
+      color: $color-muted;
+      line-height: 1.65;
+    }
+
+    .team-meta {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.5rem;
+      border-top: 1px solid $color-border;
+      padding-top: 1rem;
+
+      dt {
+        color: $color-muted;
+        margin-bottom: 0.45rem;
+      }
+
+      dd { margin: 0; }
+    }
+  }
+
+  @media (max-width: 1024px) {
+    .studio-philosophy .pillar-grid {
+      grid-template-columns: 1fr;
+      gap: 0;
+
+      .pillar {
+        padding-block: clamp(1.5rem, 4vw, 2.25rem);
+
+        .pillar-ref { margin-bottom: 1.25rem; }
+        .pillar-title { max-width: none; }
+      }
+    }
+
+    .studio-parameters .parameters-grid,
+    .studio-intro .intro-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-intro .intro-grid { gap: clamp(2.5rem, 8vw, 4rem); }
+  }
+
+  @media (max-width: 760px) {
+    .studio-parameters .parameters-list {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-leadership {
+      summary {
+        grid-template-columns: 2.25rem 1fr 1.25rem;
+        row-gap: 0.4rem;
+
+        .team-name { grid-column: 2; }
+        .team-role { grid-column: 2; }
+        .team-atelier { grid-column: 2; }
+        .team-marker { grid-column: 3; grid-row: 1; }
+      }
+
+      .team-panel {
+        grid-template-columns: 1fr;
+
+        .team-figure,
+        .team-detail { grid-column: 1; }
+      }
+
+      .team-meta { grid-template-columns: 1fr; gap: 1rem; }
+    }
+  }
+</style>
