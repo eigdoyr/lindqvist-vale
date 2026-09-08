@@ -32,7 +32,6 @@ video {
   border: 1px solid $color-text;
 }
 
-/* TYPOGRAPHY UTILITIES */
 .type-heading-xl {
   font-size: $font-heading-xl;
   font-weight: 400;
@@ -69,7 +68,6 @@ video {
   text-transform: uppercase;
 }
 
-/* LIGHTWEIGHT REVEAL ANIMATION */
 .reveal {
   opacity: 0;
   transform: translateY(20px);

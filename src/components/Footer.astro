@@ -4,7 +4,6 @@ import Logo from './Logo.astro';
 ---
 
 <footer class="site-footer" id="contact">
-  <!-- OVERSIZED BRAND LOGO -->
   <div class="footer-brand">
     <a href="/" class="brand-logo" aria-label="LINDQVIST & VALE Home">
       <Logo />
@@ -12,7 +11,6 @@ import Logo from './Logo.astro';
   </div>
 
   <div class="footer-top">
-    <!-- LEFT: DIALOGUE INVITATION -->
     <div class="dialogue-col">
       <h2 class="type-caption dialogue-title">{FOOTER_DATA.heading}</h2>
       <p class="type-body-regular dialogue-subtext">{FOOTER_DATA.subtext}</p>
@@ -21,9 +19,7 @@ import Logo from './Logo.astro';
       </a>
     </div>
 
-    <!-- RIGHT: 4-COLUMN LINK GRID -->
     <div class="footer-grid">
-      <!-- OFFICES -->
       <div class="grid-col">
         <span class="col-label type-caption">OFFICES</span>
         <ul class="col-list type-body-regular">
@@ -36,7 +32,6 @@ import Logo from './Logo.astro';
         </ul>
       </div>
 
-      <!-- DIRECT -->
       <div class="grid-col">
         <span class="col-label type-caption">DIRECT</span>
         <ul class="col-list type-body-regular">
@@ -51,7 +46,6 @@ import Logo from './Logo.astro';
         </ul>
       </div>
 
-      <!-- SITEMAP -->
       <div class="grid-col">
         <span class="col-label type-caption">SITEMAP</span>
         <ul class="col-list type-body-regular">
@@ -61,7 +55,6 @@ import Logo from './Logo.astro';
         </ul>
       </div>
 
-      <!-- SOCIAL -->
       <div class="grid-col">
         <span class="col-label type-caption">SOCIAL</span>
         <ul class="col-list type-body-regular">
@@ -73,7 +66,6 @@ import Logo from './Logo.astro';
     </div>
   </div>
 
-  <!-- BOTTOM BAR -->
   <div class="footer-bottom type-caption">
     <span>© 2026 LINDQVIST & VALE ARCHITECTS</span>
     <span>ALL RIGHTS RESERVED</span>
@@ -89,7 +81,6 @@ import Logo from './Logo.astro';
     padding-inline: $space-fluid-page;
     background-color: $color-bg;
 
-    /* BRAND LOGO: FULL WIDTH & OVERSIZED */
     .footer-brand {
       width: 100%;
       margin-bottom: clamp(4rem, 8vw, 7rem);

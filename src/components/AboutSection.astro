@@ -6,10 +6,10 @@ import { PROJECTS } from '../data/projects';
 
 <section class="about-section" id="about">
   <div class="about-header-wrapper">
-    <SectionHeader 
-      tag={ABOUT_DATA.tag} 
-      linkText={ABOUT_DATA.linkText} 
-      linkHref={ABOUT_DATA.linkHref} 
+    <SectionHeader
+      tag={ABOUT_DATA.tag}
+      linkText={ABOUT_DATA.linkText}
+      linkHref={ABOUT_DATA.linkHref}
     />
   </div>
 
@@ -23,7 +23,6 @@ import { PROJECTS } from '../data/projects';
     </h2>
   </div>
 
-  <!-- FULL-BLEED SLIDESHOW -->
   <div class="about-media-wrapper reveal" id="about-slideshow">
     <div class="slides-container">
       {PROJECTS.map((project, index) => (
@@ -34,7 +33,6 @@ import { PROJECTS } from '../data/projects';
       <div class="slide-overlay"></div>
     </div>
 
-    <!-- MINIMALIST LINE TICKS -->
     <div class="indicator-lines">
       {PROJECTS.map((_, index) => (
         <span class={`line-tick ${index === 0 ? 'is-active' : ''}`} data-tick={index}></span>
@@ -93,7 +91,6 @@ import { PROJECTS } from '../data/projects';
       }
     }
 
-    /* FULL-BLEED EDGE-TO-EDGE MEDIA */
     .about-media-wrapper {
       position: relative;
       width: 100vw;
@@ -137,7 +134,6 @@ import { PROJECTS } from '../data/projects';
         }
       }
 
-     /* LINE TICKS */
       .indicator-lines {
         position: absolute;
         bottom: $space-fluid-page;

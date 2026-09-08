@@ -24,13 +24,12 @@ interface Props {
 const { project, nextProject, prevProject } = Astro.props;
 ---
 
-<BaseLayout 
-  title={`${project.title} — Portfolio`} 
-  headerTheme="light" 
+<BaseLayout
+  title={`${project.title} — Portfolio`}
+  headerTheme="light"
   isInnerPage={true}
 >
   <main class="project-detail">
-    <!-- PROJECT HERO / HEADER -->
     <header class="project-hero">
       <div class="hero-top">
         <a href="/#works" class="back-link">← Back to Works</a>
@@ -42,7 +41,6 @@ const { project, nextProject, prevProject } = Astro.props;
         {project.subtitle && <p class="project-subtitle">{project.subtitle}</p>}
       </div>
 
-      <!-- KEY METADATA BAR -->
       <dl class="meta-grid">
         <div class="meta-item">
           <dt>Typology</dt>
@@ -63,17 +61,14 @@ const { project, nextProject, prevProject } = Astro.props;
       </dl>
     </header>
 
-    <!-- FEATURED HERO COVER -->
     <section class="cover-section">
       <div class="cover-image-container">
         <img src={project.image} alt={project.alt} class="cover-image" />
       </div>
     </section>
 
-    <!-- CONTENT & SPECS SECTION -->
     <section class="content-section">
       <div class="content-grid">
-        <!-- LEFT COLUMN: SPECS -->
         <aside class="specs-col">
           <h2 class="specs-heading">Project Credits & Details</h2>
           <dl class="specs-list">
@@ -102,10 +97,9 @@ const { project, nextProject, prevProject } = Astro.props;
           </dl>
         </aside>
 
-        <!-- RIGHT COLUMN: NARRATIVE -->
         <article class="narrative-col">
           {project.summary && <p class="lead-summary">{project.summary}</p>}
-          
+
           <div class="paragraphs">
             {project.paragraphs?.map((paragraph) => (
               <p>{paragraph}</p>
@@ -115,7 +109,6 @@ const { project, nextProject, prevProject } = Astro.props;
       </div>
     </section>
 
-    <!-- GALLERY SECTION -->
     {project.gallery && project.gallery.length > 0 && (
       <section class="gallery-section">
         <div class="gallery-grid">
@@ -131,7 +124,6 @@ const { project, nextProject, prevProject } = Astro.props;
       </section>
     )}
 
-    <!-- NEXT / PREVIOUS PROJECT NAVIGATION -->
     <nav class="project-pagination">
       <a href={`/works/${prevProject.id}`} class="nav-card prev">
         <span class="nav-label">← Previous Project</span>
@@ -157,7 +149,6 @@ const { project, nextProject, prevProject } = Astro.props;
     color: $color-text;
   }
 
-  /* ---------------- HERO / HEADER ---------------- */
   .project-hero {
     padding-inline: $space-fluid-page;
     max-width: 1400px;
@@ -182,6 +173,7 @@ const { project, nextProject, prevProject } = Astro.props;
       }
 
       .project-ref {
+        font-family: $font-caption;
         font-size: 0.875rem;
         color: $color-muted;
       }
@@ -235,7 +227,6 @@ const { project, nextProject, prevProject } = Astro.props;
     }
   }
 
-  /* ---------------- COVER SECTION ---------------- */
   .cover-section {
     padding-inline: $space-fluid-page;
     margin-bottom: clamp(4rem, 8vw, 8rem);
@@ -254,7 +245,6 @@ const { project, nextProject, prevProject } = Astro.props;
     }
   }
 
-  /* ---------------- CONTENT & SPECS ---------------- */
   .content-section {
     padding-inline: $space-fluid-page;
     max-width: 1400px;
@@ -330,7 +320,6 @@ const { project, nextProject, prevProject } = Astro.props;
     }
   }
 
-  /* ---------------- GALLERY SECTION ---------------- */
   .gallery-section {
     padding-inline: $space-fluid-page;
     margin-bottom: clamp(5rem, 10vw, 10rem);
@@ -381,7 +370,6 @@ const { project, nextProject, prevProject } = Astro.props;
     }
   }
 
-  /* ---------------- PAGINATION ---------------- */
   .project-pagination {
     display: grid;
     grid-template-columns: 1fr 1fr;
@@ -418,7 +406,6 @@ const { project, nextProject, prevProject } = Astro.props;
     }
   }
 
-  /* ---------------- RESPONSIVE MEDIA QUERIES ---------------- */
   @media (max-width: 900px) {
     .project-hero .meta-grid {
       grid-template-columns: repeat(2, 1fr);

@@ -1,6 +1,5 @@
 @use "./tokens/variables" as *;
 
-/* REUSABLE SECTION LAYOUT SYSTEM */
 .site-section {
   padding-inline: $space-fluid-page;
   padding-block: $space-section-y;
@@ -20,7 +19,6 @@
   }
 }
 
-/* GLOBAL MEDIA FRAME WITH STROKE */
 .media-frame {
   border: 1px solid $color-text;
   background-color: rgba($color-muted, 0.08);

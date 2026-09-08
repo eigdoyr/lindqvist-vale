@@ -11,11 +11,11 @@ const { isInnerPage = false, theme = 'dark' } = Astro.props;
 const isLightState = isInnerPage || theme === 'light';
 ---
 
-<header 
+<header
   class:list={[
     'site-header',
     { 'is-inner-page': isLightState, 'is-scrolled': isLightState }
-  ]} 
+  ]}
   id="site-header"
   data-inner-page={isLightState ? 'true' : 'false'}
 >
@@ -29,7 +29,7 @@ const isLightState = isInnerPage || theme === 'light';
       <Logo />
     </a>
 
-    <a href="/#contact" class="contact-link type-caption">Contact</a>
+    <a href="#contact" class="contact-link type-caption">Contact</a>
   </div>
 
   <nav class="mobile-overlay" id="mobile-nav" aria-hidden="true">
@@ -57,7 +57,6 @@ const isLightState = isInnerPage || theme === 'light';
 
     const isInnerPage = header.dataset.innerPage === 'true';
 
-    // Menu Drawer Toggle
     const toggleMenu = (open?: boolean) => {
       const isOpen = open !== undefined ? open : header.classList.toggle('is-open');
       if (open === false) header.classList.remove('is-open');
@@ -73,23 +72,19 @@ const isLightState = isInnerPage || theme === 'light';
       link.addEventListener('click', () => toggleMenu(false));
     });
 
-    // Close on Escape Key
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape' && header.classList.contains('is-open')) {
         toggleMenu(false);
       }
     });
 
-    // Scroll Listener
     let ticking = false;
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           if (isInnerPage) {
-            // Inner pages / Light theme locked to solid header state
             header.classList.add('is-scrolled');
           } else {
-            // Home page: 100vh hero threshold switch
             const threshold = window.innerHeight - 80;
             if (window.scrollY >= threshold) {
               header.classList.add('is-scrolled');
@@ -121,7 +116,7 @@ const isLightState = isInnerPage || theme === 'light';
     width: 100%;
     z-index: 1000;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-    transition: background 0.4s $ease-editorial, 
+    transition: background 0.4s $ease-editorial,
                 border-color 0.4s $ease-editorial,
                 color 0.4s $ease-editorial;
 
@@ -167,7 +162,6 @@ const isLightState = isInnerPage || theme === 'light';
 
     .nav-trigger .label-close { display: none; }
 
-    /* LIGHT / SCROLLED STATE (Immediate on inner pages, past hero on home) */
     &.is-scrolled:not(.is-open),
     &.is-inner-page:not(.is-open) {
       background: $color-bg;
@@ -180,7 +174,6 @@ const isLightState = isInnerPage || theme === 'light';
       }
     }
 
-    /* MOBILE OVERLAY */
     .mobile-overlay {
       position: fixed;
       inset: 0;

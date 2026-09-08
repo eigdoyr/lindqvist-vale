@@ -22,7 +22,7 @@ import Logo from './Logo.astro';
     document.body.style.overflow = 'hidden';
     curtain.addEventListener('animationend', release, { once: true });
 
-
+    // Fallback: animationend does not fire if the tab is backgrounded.
     setTimeout(release, 2200);
   };
 
@@ -60,7 +60,6 @@ import Logo from './Logo.astro';
     }
   }
 
-  /* Single timeline: hold, lift, then remove from the page for good. */
   @keyframes curtainDismiss {
     0%,
     42% {

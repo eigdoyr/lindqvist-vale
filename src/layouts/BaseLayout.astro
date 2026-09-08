@@ -13,14 +13,13 @@ interface Props {
   isInnerPage?: boolean;
 }
 
-const { 
-  title = "LINDQVIST & VALE — Architectural Practice", 
+const {
+  title = "LINDQVIST & VALE — Architectural Practice",
   description = "International architectural practice operating between Zürich, New York, and Tokyo." ,
-  headerTheme = 'dark', 
+  headerTheme = 'dark',
   isInnerPage = false
 } = Astro.props;
 
-// The intro curtain is a landing moment, not a per-navigation tax.
 const isHome = Astro.url.pathname === '/';
 ---
 
