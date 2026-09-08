@@ -28,9 +28,8 @@ export const FOOTER_DATA: FooterData = {
   ],
   sitemap: [
     { label: "Selected Works", href: "/#works" },
-    { label: "Studio Profile", href: "/#about" },
-    { label: "Publications", href: "/#publications" },
-    { label: "Contact", href: "/#contact" },
+    { label: "Studio", href: "/about" },
+    { label: "Contact", href: "#contact" },
   ],
   socials: [
     { label: "Instagram", href: "https://instagram.com" },

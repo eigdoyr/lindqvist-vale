@@ -9,6 +9,7 @@ interface Props {
 
 const { isInnerPage = false, theme = 'dark' } = Astro.props;
 const isLightState = isInnerPage || theme === 'light';
+const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
 ---
 
 <header 
@@ -29,14 +30,18 @@ const isLightState = isInnerPage || theme === 'light';
       <Logo />
     </a>
 
-    <a href="/#contact" class="contact-link type-caption">Contact</a>
+    <a href="#contact" class="contact-link type-caption">Contact</a>
   </div>
 
   <nav class="mobile-overlay" id="mobile-nav" aria-label="Main" inert>
     <ul class="nav-list">
       {NAV_LINKS.map((link) => (
         <li>
-          <a href={link.href} class="nav-link type-heading-l">{link.label}</a>
+          <a
+            href={link.href}
+            class="nav-link type-heading-l"
+            aria-current={link.href === currentPath ? 'page' : undefined}
+          >{link.label}</a>
         </li>
       ))}
     </ul>
@@ -194,7 +199,7 @@ const isLightState = isInnerPage || theme === 'light';
     &.is-scrolled:not(.is-open),
     &.is-inner-page:not(.is-open) {
       background: $color-bg;
-      border-bottom: 1px solid rgba($color-text, 0.15);
+      border-bottom: 1px solid $color-border;
 
       .header-inner { color: $color-text; }
       .nav-trigger, .brand-logo, .contact-link {
@@ -224,11 +229,15 @@ const isLightState = isInnerPage || theme === 'light';
         gap: clamp(1.5rem, 3vh, 2.5rem);
 
         .nav-link {
-          color: $color-text;
+          color: $color-muted;
           text-decoration: none;
-          transition: transform 0.3s $ease-editorial;
+          transition: transform 0.3s $ease-editorial, color 0.3s $ease-editorial;
 
           &:hover { transform: translateX(10px); }
+
+          &[aria-current] {
+            color: $color-text;
+          }
         }
       }
 
