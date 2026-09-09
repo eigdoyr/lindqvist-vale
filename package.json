@@ -1,5 +1,7 @@
 {
-  "name": "cd",
+  "name": "lindqvist-vale",
+  "description": "Portfolio site for Lindqvist & Vale, an architectural practice.",
+  "private": true,
   "type": "module",
   "version": "0.0.1",
   "engines": {
