@@ -8,7 +8,7 @@ interface Props {
 const { tag, linkText, linkHref = "#" } = Astro.props;
 ---
 
-<div class="section-header">
+<div class="section-header reveal">
   <span class="section-tag type-caption">{tag}</span>
   {linkText && <a href={linkHref} class="section-link">{linkText}</a>}
 </div>

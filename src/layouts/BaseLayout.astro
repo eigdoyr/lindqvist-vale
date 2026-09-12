@@ -40,19 +40,33 @@ const isHome = Astro.url.pathname === '/';
     <slot />
 
     <script>
+      const STAGGER_STEP = 90;
+      const STAGGER_MAX = 5;
+
       let observer: IntersectionObserver | null = null;
 
       const setupReveals = () => {
         observer?.disconnect();
 
         observer = new IntersectionObserver((entries) => {
-          entries.forEach((entry) => {
-            if (entry.isIntersecting) {
-              entry.target.classList.add('is-visible');
-              observer?.unobserve(entry.target);
-            }
+          // Stagger against what crossed together, not DOM order, so an
+          // element scrolled past on its own never waits.
+          const arrived = entries
+            .filter((entry) => entry.isIntersecting)
+            .sort((a, b) => {
+              const top = a.boundingClientRect.top - b.boundingClientRect.top;
+              return top !== 0 ? top : a.boundingClientRect.left - b.boundingClientRect.left;
+            });
+
+          arrived.forEach((entry, index) => {
+            const target = entry.target as HTMLElement;
+            const step = Math.min(index, STAGGER_MAX) * STAGGER_STEP;
+
+            if (step > 0) target.style.setProperty('--reveal-delay', `${step}ms`);
+            target.classList.add('is-visible');
+            observer?.unobserve(target);
           });
-        }, { threshold: 0.1 });
+        }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
 
         document.querySelectorAll('.reveal').forEach((el) => observer?.observe(el));
       };
