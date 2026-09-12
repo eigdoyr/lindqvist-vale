@@ -11,7 +11,11 @@ import Logo from './Logo.astro';
 <script>
   // Module scope survives client-side navigation; the DOM does not.
   let hasNavigated = false;
-  document.addEventListener('astro:after-swap', () => { hasNavigated = true; });
+
+  document.addEventListener('astro:after-swap', () => {
+    hasNavigated = true;
+    document.getElementById('intro-flash')?.remove();
+  });
 
   const initIntro = () => {
     const curtain = document.getElementById('intro-flash');

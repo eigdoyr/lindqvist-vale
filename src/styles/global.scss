@@ -103,4 +103,31 @@ video {
     opacity: 1;
     transform: none;
   }
+
+  /* The universal selector above does not reach view-transition pseudos. */
+  ::view-transition-old(root),
+  ::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+
+@keyframes pageOut {
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes pageIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+}
+
+::view-transition-old(root) {
+  animation: pageOut $duration-base $ease-editorial forwards;
+}
+
+::view-transition-new(root) {
+  animation: pageIn $duration-slow $ease-out-editorial forwards;
 }

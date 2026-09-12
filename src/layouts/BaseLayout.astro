@@ -71,7 +71,9 @@ const isHome = Astro.url.pathname === '/';
         document.querySelectorAll('.reveal').forEach((el) => observer?.observe(el));
       };
 
-      document.addEventListener('astro:page-load', setupReveals);
+      // after-swap runs before the view transition paints; page-load runs after,
+      // which would snapshot the incoming page with everything still hidden.
+      document.addEventListener('astro:after-swap', setupReveals);
       if (document.readyState !== 'loading') setupReveals();
     </script>
   </body>
