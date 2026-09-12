@@ -1,0 +1,145 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Footer from '../components/Footer.astro';
+
+const ROUTES = [
+  { label: 'Selected works', href: '/works' },
+  { label: 'Studio', href: '/studio' },
+  { label: 'Homepage', href: '/' },
+];
+---
+
+<BaseLayout
+  title="Unbuilt — LINDQVIST & VALE"
+  description="The requested page could not be found."
+  isInnerPage={true}
+>
+  <main class="not-found">
+    <div class="section-inner">
+      <span class="type-caption error-eyebrow">Error / 404</span>
+
+      <h1 class="type-heading-xl error-headline">
+        This site is <em>unbuilt</em>.
+      </h1>
+
+      <p class="error-lead type-body-regular">
+        The page you're looking for doesn't exist.
+      </p>
+
+      <dl class="error-meta type-caption">
+        <div>
+          <dt>Status</dt>
+          <dd>Unrealised</dd>
+        </div>
+        <div>
+          <dt>Reference</dt>
+          <dd>404</dd>
+        </div>
+        <div>
+          <dt>Site</dt>
+          <dd>&mdash;</dd>
+        </div>
+      </dl>
+
+      <nav class="error-routes" aria-label="Recovery">
+        {ROUTES.map((route) => (
+          <a href={route.href} class="error-route">{route.label}</a>
+        ))}
+      </nav>
+    </div>
+  </main>
+
+  <Footer />
+</BaseLayout>
+
+<style lang="scss">
+  @use '../styles/tokens/variables' as *;
+
+  $content-max: 1400px;
+
+  .not-found {
+    background-color: $color-bg;
+    color: $color-text;
+    padding-top: clamp(8rem, 16vw, 14rem);
+    padding-bottom: $space-section-y;
+    padding-inline: $space-fluid-page;
+    min-height: 70vh;
+    display: flex;
+    align-items: center;
+  }
+
+  .section-inner {
+    max-width: $content-max;
+    margin-inline: auto;
+    width: 100%;
+  }
+
+  .error-eyebrow {
+    display: block;
+    color: $color-muted;
+    margin-bottom: clamp(2.5rem, 6vw, 5rem);
+  }
+
+  .error-headline {
+    line-height: 1.06;
+    margin-bottom: clamp(1.5rem, 3vw, 2.25rem);
+
+    em {
+      font-style: italic;
+      font-family: $font-lora;
+    }
+  }
+
+  .error-lead {
+    color: $color-muted;
+    max-width: 46ch;
+    line-height: 1.6;
+    margin-bottom: clamp(2.5rem, 5vw, 3.5rem);
+  }
+
+  .error-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3.5rem);
+    border-top: 1px solid $color-border;
+    padding-top: clamp(1.25rem, 2.5vw, 1.75rem);
+    margin-bottom: clamp(2.5rem, 5vw, 4rem);
+
+    dt {
+      color: $color-muted;
+      margin-bottom: 0.45rem;
+    }
+
+    dd {
+      margin: 0;
+      font-variant-numeric: tabular-nums;
+    }
+  }
+
+  .error-routes {
+    display: flex;
+    flex-wrap: wrap;
+    gap: clamp(1.5rem, 4vw, 3rem);
+  }
+
+  .error-route {
+    font-family: $font-lora;
+    font-style: italic;
+    font-size: $font-body-regular;
+    color: $color-text;
+    text-decoration: none;
+    padding-bottom: 0.35rem;
+    border-bottom: 1px solid $color-border;
+    transition: opacity 0.3s $ease-editorial, border-color 0.3s $ease-editorial;
+
+    &:hover {
+      opacity: 0.6;
+      border-bottom-color: $color-text;
+    }
+
+    &:focus-visible {
+      outline: 1px solid $color-text;
+      outline-offset: 4px;
+    }
+  }
+</style>
