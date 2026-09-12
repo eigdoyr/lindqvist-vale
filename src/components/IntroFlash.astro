@@ -48,7 +48,7 @@ import Logo from './Logo.astro';
     z-index: 9999;
     background-color: #0e0e0e;
     will-change: transform;
-    animation: curtainDismiss 1.9s $ease-editorial forwards;
+    animation: curtainDismiss $duration-page * 1.6 $ease-editorial forwards;
 
     .logo-wrapper {
       position: absolute;
@@ -58,7 +58,7 @@ import Logo from './Logo.astro';
       color: #ffffff;
       opacity: 0;
       transform: translate(-50%, calc(-50% + 6px)) scale(0.95);
-      animation: logoReveal 1.9s $ease-out-editorial forwards;
+      animation: logoReveal $duration-page * 1.6 $ease-out-editorial forwards;
 
       :global(svg) {
         width: 100%;

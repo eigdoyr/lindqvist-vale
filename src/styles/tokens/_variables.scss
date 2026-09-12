@@ -24,5 +24,13 @@ $space-section-y-sm: clamp(3.5rem, 7vw, 6.5rem);
 $space-element-gap: clamp(1.5rem, 3.5vw, 3rem);
 
 /* EASING CURVES */
+/* in-out: state changes that move in place (header, drawer, markers) */
 $ease-editorial: cubic-bezier(0.76, 0, 0.24, 1);
+/* out: anything that arrives (reveals, hovers, page entry) */
 $ease-out-editorial: cubic-bezier(0.16, 1, 0.3, 1);
+
+/* DURATIONS */
+$duration-fast: 200ms;
+$duration-base: 400ms;
+$duration-slow: 800ms;
+$duration-page: 1200ms;

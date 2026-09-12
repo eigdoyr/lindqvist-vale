@@ -33,7 +33,7 @@ const { tag, linkText, linkHref = "#" } = Astro.props;
       font-size: clamp(1.125rem, 1.5vw, 1.25rem);
       text-decoration: none;
       color: $color-text;
-      transition: opacity 0.2s ease;
+      transition: opacity $duration-fast $ease-out-editorial;
 
       &:hover {
         opacity: 0.6;

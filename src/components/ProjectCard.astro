@@ -57,7 +57,7 @@ const { project, sizes = '(max-width: 768px) 85vw, min(56vw, 785px)' } = Astro.p
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.8s $ease-editorial;
+        transition: transform $duration-slow $ease-editorial;
       }
 
       &:hover img {
@@ -73,7 +73,7 @@ const { project, sizes = '(max-width: 768px) 85vw, min(56vw, 785px)' } = Astro.p
       .card-title {
         font-weight: 400;
         font-style: italic;
-        transition: opacity 0.2s ease;
+        transition: opacity $duration-fast $ease-out-editorial;
       }
 
       .metadata {

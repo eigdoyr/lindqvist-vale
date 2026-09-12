@@ -319,7 +319,7 @@ const s = STUDIO_DATA;
       align-items: center;
       gap: $team-gap;
       padding-block: clamp(0.85rem, 1.6vw, 1.15rem);
-      transition: opacity 0.3s $ease-editorial;
+      transition: opacity $duration-base $ease-editorial;
 
       &::-webkit-details-marker { display: none; }
 
@@ -366,7 +366,7 @@ const s = STUDIO_DATA;
         width: 11px;
         height: 1px;
         background-color: $color-text;
-        transition: transform 0.4s $ease-editorial;
+        transition: transform $duration-base $ease-editorial;
       }
 
       &::after { transform: rotate(90deg); }

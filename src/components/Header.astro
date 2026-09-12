@@ -150,9 +150,9 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
     width: 100%;
     z-index: 1000;
     background: linear-gradient(180deg, rgba(0, 0, 0, 0.6) 0%, rgba(0, 0, 0, 0) 100%);
-    transition: background 0.4s $ease-editorial, 
-                border-color 0.4s $ease-editorial,
-                color 0.4s $ease-editorial;
+    transition: background $duration-base $ease-editorial, 
+                border-color $duration-base $ease-editorial,
+                color $duration-base $ease-editorial;
 
     .header-inner {
       display: flex;
@@ -162,7 +162,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       position: relative;
       z-index: 1001;
       color: #ffffff;
-      transition: color 0.4s $ease-editorial;
+      transition: color $duration-base $ease-editorial;
     }
 
     .brand-logo {
@@ -187,7 +187,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       display: inline-flex;
       align-items: center;
       filter: drop-shadow(0 1px 3px rgba(0, 0, 0, 0.4));
-      transition: opacity 0.2s ease, color 0.4s $ease-editorial, filter 0.4s $ease-editorial;
+      transition: opacity $duration-fast $ease-out-editorial, color $duration-base $ease-editorial, filter $duration-base $ease-editorial;
 
       &:hover {
         opacity: 0.75;
@@ -219,7 +219,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       padding: clamp(6rem, 12vh, 8rem) $space-fluid-page $space-fluid-page;
       opacity: 0;
       visibility: hidden;
-      transition: opacity 0.35s $ease-editorial, visibility 0s linear 0.35s;
+      transition: opacity $duration-base $ease-editorial, visibility 0s linear $duration-base;
       z-index: 1000;
 
       .nav-list {
@@ -231,7 +231,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
         .nav-link {
           color: $color-muted;
           text-decoration: none;
-          transition: transform 0.3s $ease-editorial, color 0.3s $ease-editorial;
+          transition: transform $duration-base $ease-editorial, color $duration-base $ease-editorial;
 
           &:hover { transform: translateX(10px); }
 
@@ -266,7 +266,7 @@ const currentPath = Astro.url.pathname.replace(/\/$/, '') || '/';
       .mobile-overlay {
         opacity: 1;
         visibility: visible;
-        transition: opacity 0.35s $ease-editorial, visibility 0s;
+        transition: opacity $duration-base $ease-editorial, visibility 0s;
       }
     }
   }
