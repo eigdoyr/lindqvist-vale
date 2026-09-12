@@ -4,6 +4,7 @@ import '@fontsource/lora/400-italic.css';
 import '../styles/global.scss';
 import '../styles/main.scss';
 import { ClientRouter } from 'astro:transitions';
+import { AUTHOR } from '../data/footer';
 import Header from '../components/Header.astro';
 import IntroFlash from '../components/IntroFlash.astro';
 
@@ -22,6 +23,22 @@ const {
 } = Astro.props;
 
 const isHome = Astro.url.pathname === '/';
+
+const canonical = new URL(Astro.url.pathname, Astro.site ?? Astro.url).href;
+
+const schema = {
+  '@context': 'https://schema.org',
+  '@type': 'WebSite',
+  name: 'LINDQVIST & VALE',
+  url: Astro.site?.href ?? canonical,
+  description,
+  creator: {
+    '@type': 'Person',
+    name: AUTHOR.name,
+    url: AUTHOR.url,
+    sameAs: AUTHOR.links.map((link) => link.href),
+  },
+};
 ---
 
 <!DOCTYPE html>
@@ -33,6 +50,10 @@ const isHome = Astro.url.pathname === '/';
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <title>{title}</title>
     <meta name="description" content={description} />
+    <meta name="author" content={AUTHOR.name} />
+    <link rel="canonical" href={canonical} />
+    <link rel="author" href={AUTHOR.url} />
+    <script type="application/ld+json" set:html={JSON.stringify(schema)} is:inline />
     <ClientRouter />
   </head>
   <body class:list={[{ 'is-inner-page': isInnerPage }]}>

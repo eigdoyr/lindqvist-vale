@@ -5,6 +5,23 @@ export interface OfficeLocation {
   address: string;
 }
 
+export interface Author {
+  name: string;
+  url: string;
+  links: NavItem[];
+}
+
+export const AUTHOR: Author = {
+  name: "Ryodgie Barnatia",
+  url: "https://ryodgie.com",
+  links: [
+    { label: "ryodgie.com", href: "https://ryodgie.com" },
+    { label: "LinkedIn", href: "https://linkedin.com/in/ryodgie" },
+    { label: "Dribbble", href: "https://dribbble.com/ryodgie" },
+    { label: "GitHub", href: "https://github.com/eigdoyr" },
+  ],
+};
+
 export interface FooterData {
   heading: string;
   subtext: string;
@@ -27,7 +44,7 @@ export const FOOTER_DATA: FooterData = {
     { city: "TOKYO", address: "5-7-2 Minami-Aoyama, Minato-ku 107-0062" },
   ],
   sitemap: [
-    { label: "Selected Works", href: "/works" },
+    { label: "Selected Works", href: "/#works" },
     { label: "Studio", href: "/studio" },
     { label: "Contact", href: "#contact" },
   ],

@@ -1,5 +1,5 @@
 ---
-import { FOOTER_DATA } from '../data/footer';
+import { FOOTER_DATA, AUTHOR } from '../data/footer';
 import Logo from './Logo.astro';
 ---
 
@@ -64,6 +64,22 @@ import Logo from './Logo.astro';
         </ul>
       </div>
     </div>
+  </div>
+
+  <div class="colophon">
+    <p class="colophon-note type-body-small">
+      This is a speculative concept project. LINDQVIST &amp; VALE is a fictional
+      practice &mdash; the people, projects, offices, and contact details are invented,
+      and all photography is placeholder imagery from Unsplash. Design and build by{' '}
+      <a href={AUTHOR.url} rel="author">{AUTHOR.name}</a>.
+    </p>
+    <ul class="colophon-links type-caption">
+      {AUTHOR.links.map((link) => (
+        <li>
+          <a href={link.href} target="_blank" rel="noopener me">{link.label}</a>
+        </li>
+      ))}
+    </ul>
   </div>
 
   <div class="footer-bottom type-caption">
@@ -185,6 +201,50 @@ import Logo from './Logo.astro';
               }
             }
           }
+        }
+      }
+    }
+
+    .colophon {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: end;
+      gap: clamp(1.25rem, 3vw, 2.5rem);
+      border-top: 1px solid $color-border;
+      padding-top: 2rem;
+      margin-bottom: 2rem;
+
+      .colophon-note {
+        color: $color-muted;
+        line-height: 1.6;
+        max-width: 62ch;
+        margin: 0;
+
+        a {
+          color: $color-text;
+          text-decoration: none;
+          border-bottom: 1px solid $color-border;
+          transition: border-color $duration-fast $ease-out-editorial;
+
+          &:hover { border-bottom-color: $color-text; }
+        }
+      }
+
+      .colophon-links {
+        list-style: none;
+        display: flex;
+        flex-wrap: wrap;
+        gap: clamp(1rem, 2.5vw, 2rem);
+        margin: 0;
+        padding: 0;
+
+        a {
+          color: $color-muted;
+          text-decoration: none;
+          transition: color $duration-fast $ease-out-editorial;
+
+          &:hover { color: $color-text; }
         }
       }
     }
